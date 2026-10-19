@@ -1,0 +1,7 @@
+{
+  "version": "0.2",
+  "words": ["ouds"],
+  "language": "en-US,fr-FR",
+  "ignorePaths": [".cspell.json"],
+  "useGitignore": true
+}

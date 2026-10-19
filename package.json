@@ -1,0 +1,90 @@
+{
+  "name": "@nilloq/ouds-web",
+  "version": "0.1.0",
+  "description": "Vue components and framework-independent custom elements styled with OUDS Web.",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "./dist/index.js",
+    "./dist/elements.js"
+  ],
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/types/button.d.ts",
+      "import": "./dist/button.js"
+    },
+    "./tag": {
+      "types": "./dist/types/tag.d.ts",
+      "import": "./dist/tag.js"
+    },
+    "./components": {
+      "types": "./dist/types/elements/index.d.ts",
+      "import": "./dist/elements.js"
+    },
+    "./components/button": {
+      "types": "./dist/types/elements/button.d.ts",
+      "import": "./dist/elements-button.js"
+    },
+    "./components/tag": {
+      "types": "./dist/types/elements/tag.d.ts",
+      "import": "./dist/elements-tag.js"
+    },
+    "./vue": {
+      "types": "./dist/types/vue/index.d.ts",
+      "import": "./dist/vue.js"
+    },
+    "./vue/button": {
+      "types": "./dist/types/vue/button.d.ts",
+      "import": "./dist/vue-button.js"
+    },
+    "./vue/tag": {
+      "types": "./dist/types/vue/tag.d.ts",
+      "import": "./dist/vue-tag.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vp build && vp build --config vite.vue.config.ts && vue-tsc --declaration --emitDeclarationOnly --noEmit false --outDir dist/types",
+    "dev": "vp build --watch",
+    "playground": "vp run build && vp dev --config playground/vite.config.ts",
+    "test": "vp test",
+    "check": "vp check && vue-tsc --noEmit",
+    "prepublishOnly": "vp run build",
+    "prepare": "vp config && vp run build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "bumpp": "^11.1.0",
+    "typescript": "^5.9.3",
+    "vite-plus": "catalog:",
+    "vue": "^3.5.44",
+    "vue-tsc": "^3.3.13"
+  },
+  "peerDependencies": {
+    "vue": ">=3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.9.1",
+      "onFail": "download"
+    }
+  }
+}
