@@ -6,28 +6,27 @@ const {
   variant = "neutral",
   size = "medium",
   muted = false,
+  statusIcon = false,
 } = defineProps<{
   variant?: OudsTagVariant;
+  statusIcon?: boolean;
   size?: "medium" | "small";
   muted?: boolean;
 }>();
 
-const functionalVariants: OudsTagVariant[] = ["positive", "info", "warning", "negative"];
 const tagClasses = computed(() => [
   "tag",
   variant !== "neutral" && `tag-${variant}`,
-  muted && "tag-muted",
-  size === "small" && "tag-small",
+  {
+    "tag-muted": muted,
+    "tag-small": size === "small",
+  },
 ]);
 </script>
 
 <template>
   <span :class="tagClasses">
-    <span
-      v-if="functionalVariants.includes(variant)"
-      class="tag-status-icon"
-      aria-hidden="true"
-    ></span>
+    <span v-if="statusIcon" class="tag-status-icon" aria-hidden="true"></span>
     <slot>Tag</slot>
   </span>
 </template>
