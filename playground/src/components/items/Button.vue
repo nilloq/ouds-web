@@ -17,8 +17,11 @@ const disabled = ref(false);
 const loading = ref(false);
 const iconOnly = ref(false);
 const clicks = ref(0);
+
 const { codeDisplayMode } = useStore();
 const copied = ref(false);
+
+// Avoid a literal closing tag here so it cannot terminate this SFC script block early.
 const scriptCloseTag = "</scr" + "ipt>";
 
 const customElementCode = computed(() => {
