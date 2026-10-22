@@ -7,7 +7,7 @@ import ThemeSwitch from "./ui/ThemeSwitch.vue";
     <nav class="navbar lg:navbar-expand" aria-label="Global navigation">
       <div class="container-fluid container-max-width">
         <div class="navbar-brand me-auto lg:me-xlarge">
-          <a class="stretched-link" href="/">
+          <RouterLink class="stretched-link" to="/">
             <img
               src="../assets/img/orange-logo.svg"
               width="50"
@@ -15,7 +15,7 @@ import ThemeSwitch from "./ui/ThemeSwitch.vue";
               alt="OUDS Web - Back to Home"
               loading="lazy"
             />
-          </a>
+          </RouterLink>
           <h1 class="title">OUDS Web Components</h1>
         </div>
         <button
@@ -32,7 +32,9 @@ import ThemeSwitch from "./ui/ThemeSwitch.vue";
         <div id="global-header-1.1" class="navbar-collapse collapse lg:me-auto global-header-1">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" href="/components" aria-current="page">Components</a>
+              <RouterLink class="nav-link active" to="/components" aria-current="page">
+                Components
+              </RouterLink>
             </li>
           </ul>
         </div>
