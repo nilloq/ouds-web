@@ -26,9 +26,9 @@ const scriptCloseTag = "</scr" + "ipt>";
 
 const customElementCode = computed(() => {
   const attrs = [
+    `type="${type.value}"`,
     `variant="${variant.value}"`,
     `size="${size.value}"`,
-    `type="${type.value}"`,
     ...(iconOnly.value ? ["icon-only"] : []),
     ...(disabled.value ? ["disabled"] : []),
     ...(loading.value ? ["loading"] : []),
@@ -44,9 +44,9 @@ ${scriptCloseTag}
 
 const vueCode = computed(() => {
   const props = [
+    `type="${type.value}"`,
     `variant="${variant.value}"`,
     `size="${size.value}"`,
-    `type="${type.value}"`,
     ...(iconOnly.value ? [':icon-only="true"'] : []),
     ...(disabled.value ? ["disabled"] : []),
     ...(loading.value ? [':loading="true"'] : []),
@@ -134,7 +134,7 @@ const typeSelectOptions = computed(() => [
       <div class="row">
         <div class="col-12 md:col-6">
           <div
-            class="d-flex flex-column justify-content-center align-items-center bg-secondary p-medium gap-small preview"
+            class="d-flex flex-column justify-content-center align-items-center bg-secondary p-medium gap-small h-100 preview"
             aria-label="Button preview"
           >
             <OudsButton
@@ -147,12 +147,13 @@ const typeSelectOptions = computed(() => [
               @click="clicks++"
               >{{ label || "Button" }}</OudsButton
             >
-            <p class="text-muted" aria-live="polite">Activated {{ clicks }} times</p>
+            <p class="text-muted mb-none" aria-live="polite">Activated {{ clicks }} times</p>
           </div>
         </div>
         <div class="col-12 md:col-6">
           <form class="p-medium" @submit.prevent>
-            <div class="d-flex flex-column gap-small">
+            <div class="d-flex flex-column gap-small mb-small">
+              <OudsSelect v-model="type" outlined label="Type" :options="typeSelectOptions" />
               <OudsTextInput v-model="label" outlined label="Label" placeholder="Button label" />
               <OudsSelect
                 v-model="variant"
@@ -161,7 +162,6 @@ const typeSelectOptions = computed(() => [
                 :options="variantSelectOptions"
               />
               <OudsSelect v-model="size" outlined label="Size" :options="sizeSelectOptions" />
-              <OudsSelect v-model="type" outlined label="Type" :options="typeSelectOptions" />
             </div>
             <div class="d-flex flex-column">
               <OudsCheckbox v-model="disabled" label="Disabled" />
@@ -263,7 +263,7 @@ const typeSelectOptions = computed(() => [
 
 <style scoped>
 .preview {
-  min-height: 30rem;
+  min-height: 15rem;
 }
 
 pre code {

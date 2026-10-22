@@ -8,7 +8,7 @@ const projectRoot = resolve(playgroundRoot, "..");
 
 export default defineConfig({
   root: playgroundRoot,
-  base: process.env.PLAYGROUND_BASE ?? "/",
+  base: process.env.BASE_URL ?? "/",
   plugins: [
     vue({
       template: {
