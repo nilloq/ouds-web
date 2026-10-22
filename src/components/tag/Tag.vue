@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { OudsTagVariant } from "./tag.types.js";
+import type { TagVariant } from "./tag.types.js";
 
 const {
   variant = "neutral",
@@ -8,7 +8,7 @@ const {
   muted = false,
   statusIcon = false,
 } = defineProps<{
-  variant?: OudsTagVariant;
+  variant?: TagVariant;
   statusIcon?: boolean;
   size?: "medium" | "small";
   muted?: boolean;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { OudsButtonVariant } from "./button.types.js";
+import type { ButtonType, ButtonVariant, ButtonSize } from "./button.types.js";
 
 const {
   type = "button",
@@ -8,12 +8,14 @@ const {
   size = "medium",
   iconOnly = false,
   disabled = false,
+  loading = false,
 } = defineProps<{
-  type?: "button" | "submit" | "reset";
-  variant?: OudsButtonVariant;
-  size?: "medium" | "small";
+  type?: ButtonType;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   iconOnly?: boolean;
   disabled?: boolean;
+  loading?: boolean;
 }>();
 
 const buttonClasses = computed(() => {
@@ -23,6 +25,7 @@ const buttonClasses = computed(() => {
     {
       "btn-icon": iconOnly,
       "btn-small": size === "small",
+      "loading-indeterminate": loading,
     },
   ];
 });
@@ -30,7 +33,17 @@ const buttonType = computed(() => (type === "submit" || type === "reset" ? type 
 </script>
 
 <template>
-  <button :class="buttonClasses" :type="buttonType" :disabled="disabled">
+  <button :class="buttonClasses" :type="buttonType" :disabled="disabled || loading">
     <slot>Button</slot>
+    <svg
+      v-if="loading"
+      viewBox="0 0 40 40"
+      xmlns="http://www.w3.org/2000/svg"
+      class="loader"
+      aria-hidden="true"
+    >
+      <circle class="loader-inner" cx="20" cy="20" r="17"></circle>
+    </svg>
+    <span v-if="loading" role="status" class="visually-hidden">Loading</span>
   </button>
 </template>

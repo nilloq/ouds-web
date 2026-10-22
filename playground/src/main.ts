@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import router from "./router";
-import "@nilloq/ouds-web";
+import "@nilloq/ouds-web/vue";
 import App from "./App.vue";
 
 createApp(App).use(router).mount("#app");

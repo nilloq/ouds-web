@@ -19,6 +19,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      "@nilloq/ouds-web/vue": resolve(projectRoot, "dist/vue.js"),
       "@nilloq/ouds-web": resolve(projectRoot, "dist/index.js"),
     },
   },

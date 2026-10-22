@@ -21,11 +21,13 @@ const routes = [
         file
           .split("/")
           .pop()
-          ?.replace(/\.vue$/, "") ?? "";
+          ?.replace(/\.vue$/, "")
+          .replace(/([a-z])([A-Z])/g, "$1-$2")
+          .toLowerCase() ?? "";
 
       return {
-        path: name.toLowerCase(),
-        name: name.toLowerCase(),
+        path: name,
+        name,
         component,
       };
     }),

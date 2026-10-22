@@ -19,5 +19,36 @@
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit"
+  },
+  "peacock.color": "#ff8000",
+  "peacock.remoteColor": "#ff8000",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#ff9933",
+    "activityBar.activeBorder": "#15202b",
+    "activityBar.background": "#ff9933",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#008040",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "activityBarTop.activeBackground": "#ff9933",
+    "activityBarTop.activeBorder": "#15202b",
+    "activityBarTop.background": "#ff9933",
+    "activityBarTop.foreground": "#15202b",
+    "activityBarTop.inactiveForeground": "#15202b99",
+    "commandCenter.border": "#15202b99",
+    "commandCenter.foreground": "#15202b",
+    "sash.hoverBorder": "#ff9933",
+    "statusBar.background": "#ff8000",
+    "statusBar.debuggingBackground": "#ff8000",
+    "statusBar.debuggingForeground": "#15202b",
+    "statusBar.foreground": "#15202b",
+    "statusBar.inactiveBackground": "#ff8000",
+    "statusBarItem.hoverBackground": "#cc6600",
+    "statusBarItem.remoteBackground": "#008040",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#ff8000",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#ff800099",
+    "titleBar.inactiveForeground": "#15202b99"
   }
 }

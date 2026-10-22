@@ -25,6 +25,18 @@
       "types": "./dist/types/tag.d.ts",
       "import": "./dist/tag.js"
     },
+    "./select": {
+      "types": "./dist/types/select.d.ts",
+      "import": "./dist/select.js"
+    },
+    "./checkbox": {
+      "types": "./dist/types/checkbox.d.ts",
+      "import": "./dist/checkbox.js"
+    },
+    "./text-input": {
+      "types": "./dist/types/text-input.d.ts",
+      "import": "./dist/text-input.js"
+    },
     "./components": {
       "types": "./dist/types/elements/index.d.ts",
       "import": "./dist/elements.js"
@@ -37,6 +49,18 @@
       "types": "./dist/types/elements/tag.d.ts",
       "import": "./dist/elements-tag.js"
     },
+    "./components/select": {
+      "types": "./dist/types/elements/select.d.ts",
+      "import": "./dist/elements-select.js"
+    },
+    "./components/checkbox": {
+      "types": "./dist/types/elements/checkbox.d.ts",
+      "import": "./dist/elements-checkbox.js"
+    },
+    "./components/text-input": {
+      "types": "./dist/types/elements/text-input.d.ts",
+      "import": "./dist/elements-text-input.js"
+    },
     "./vue": {
       "types": "./dist/types/vue/index.d.ts",
       "import": "./dist/vue.js"
@@ -48,6 +72,18 @@
     "./vue/tag": {
       "types": "./dist/types/vue/tag.d.ts",
       "import": "./dist/vue-tag.js"
+    },
+    "./vue/select": {
+      "types": "./dist/types/vue/select.d.ts",
+      "import": "./dist/vue-select.js"
+    },
+    "./vue/checkbox": {
+      "types": "./dist/types/vue/checkbox.d.ts",
+      "import": "./dist/vue-checkbox.js"
+    },
+    "./vue/text-input": {
+      "types": "./dist/types/vue/text-input.d.ts",
+      "import": "./dist/vue-text-input.js"
     },
     "./package.json": "./package.json"
   },

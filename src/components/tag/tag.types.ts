@@ -1,11 +1,11 @@
-export type OudsTagVariant = "neutral" | "accent" | "positive" | "info" | "warning" | "negative";
+export type TagVariant = "neutral" | "accent" | "positive" | "info" | "warning" | "negative";
 
-export type OudsTagElement = HTMLElement & {
-  variant: OudsTagVariant;
+export type TagElement = HTMLElement & {
+  variant: TagVariant;
   size: "medium" | "small";
   muted: boolean;
 };
 
-export type OudsTagConstructor = CustomElementConstructor & {
-  new (initialProps?: Partial<OudsTagElement>): OudsTagElement;
+export type TagConstructor = CustomElementConstructor & {
+  new (initialProps?: Partial<TagElement>): TagElement;
 };

@@ -1,16 +1,16 @@
 import { defineCustomElement } from "vue";
 import OudsButtonComponent from "../components/button/Button.vue";
-import type { OudsButtonConstructor } from "../components/button/button.types.js";
+import type { ButtonConstructor } from "../components/button/button.types.js";
 
 export type {
-  OudsButtonConstructor,
-  OudsButtonElement,
-  OudsButtonVariant,
+  ButtonConstructor,
+  ButtonElement,
+  ButtonVariant,
 } from "../components/button/button.types.js";
 
 export const OudsButton = defineCustomElement(OudsButtonComponent, {
   shadowRoot: false,
-}) as unknown as OudsButtonConstructor;
+}) as unknown as ButtonConstructor;
 
 export function defineOudsButton(): void {
   if (typeof customElements === "undefined") return;
