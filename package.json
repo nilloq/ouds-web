@@ -1,6 +1,6 @@
 {
   "name": "@nilloq/ouds-web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue components and framework-independent custom elements styled with OUDS Web.",
   "license": "MIT",
   "files": [
@@ -103,7 +103,7 @@
     "@types/node": "^26.6.5",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vueuse/core": "^15.0.0",
-    "bumpp": "^11.1.0",
+    "bumpp": "^12.3.0",
     "typescript": "^5.9.3",
     "vite-plus": "catalog:",
     "vue": "^3.5.44",
