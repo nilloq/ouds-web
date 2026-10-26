@@ -1,6 +1,6 @@
 {
   "version": "0.2",
-  "words": ["ouds", "xlarge", "xsmall"],
+  "words": ["ouds", "shiki", "xlarge", "xsmall"],
   "language": "en-US,fr-FR",
   "ignorePaths": [".cspell.json"],
   "useGitignore": true

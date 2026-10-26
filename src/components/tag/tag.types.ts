@@ -1,8 +1,10 @@
-export type TagVariant = "neutral" | "accent" | "positive" | "info" | "warning" | "negative";
+import type { TagVariant, TagSize } from "./tag.options.js";
+
+export type { TagVariant, TagSize } from "./tag.options.js";
 
 export type TagElement = HTMLElement & {
   variant: TagVariant;
-  size: "medium" | "small";
+  size: TagSize;
   muted: boolean;
 };
 

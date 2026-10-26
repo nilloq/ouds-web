@@ -20,3 +20,6 @@ defineOudsTag();
 defineOudsSelect();
 defineOudsCheckbox();
 defineOudsTextInput();
+
+export * from "../components/button/button.options.js";
+export * from "../components/tag/tag.options.js";

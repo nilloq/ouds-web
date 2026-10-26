@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { ButtonType, ButtonVariant, ButtonSize } from "./button.types.js";
+import type { ButtonType, ButtonVariant, ButtonSize, ButtonNavigation } from "./button.types.js";
 
 const {
   type = "button",
   variant = "default",
   size = "medium",
   iconOnly = false,
+  ariaLabel,
+  navigation,
   disabled = false,
   loading = false,
 } = defineProps<{
@@ -14,6 +16,8 @@ const {
   variant?: ButtonVariant;
   size?: ButtonSize;
   iconOnly?: boolean;
+  ariaLabel?: string;
+  navigation?: ButtonNavigation;
   disabled?: boolean;
   loading?: boolean;
 }>();
@@ -27,6 +31,7 @@ const buttonClasses = computed(() => {
       "btn-small": size === "small",
       "loading-indeterminate": loading,
     },
+    ...(navigation ? [`btn-${navigation}`] : []),
   ];
 });
 const buttonType = computed(() => (type === "submit" || type === "reset" ? type : "button"));
@@ -34,7 +39,8 @@ const buttonType = computed(() => (type === "submit" || type === "reset" ? type 
 
 <template>
   <button :class="buttonClasses" :type="buttonType" :disabled="disabled || loading">
-    <slot>Button</slot>
+    <slot />
+    <span v-if="ariaLabel" class="visually-hidden">{{ ariaLabel }}</span>
     <svg
       v-if="loading"
       viewBox="0 0 40 40"

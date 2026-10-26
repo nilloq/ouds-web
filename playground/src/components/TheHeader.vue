@@ -16,7 +16,7 @@ import ThemeSwitch from "./ui/ThemeSwitch.vue";
               loading="lazy"
             />
           </RouterLink>
-          <h1 class="title">OUDS Web Components</h1>
+          <h1 class="title">OUDS Web</h1>
         </div>
         <button
           class="navbar-toggler collapsed"

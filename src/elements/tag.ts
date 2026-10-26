@@ -14,3 +14,5 @@ export function defineOudsTag(): void {
     customElements.define("ouds-tag", OudsTag);
   }
 }
+
+export * from "../components/tag/tag.options.js";

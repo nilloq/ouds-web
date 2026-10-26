@@ -1,18 +1,29 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { OudsButton, OudsSelect, OudsCheckbox, OudsTextInput } from "@nilloq/ouds-web/vue";
+import {
+  OudsButton,
+  OudsSelect,
+  OudsCheckbox,
+  OudsTextInput,
+  buttonVariants,
+  buttonSizes,
+  buttonTypes,
+  buttonNavigations,
+  type ButtonType,
+  type ButtonVariant,
+  type ButtonSize,
+  type ButtonNavigation,
+} from "@nilloq/ouds-web/vue";
 import { useStore } from "../../utils/store";
-
-import type {
-  ButtonType,
-  ButtonVariant,
-  ButtonSize,
-} from "../../../../src/components/button/button.types.js";
+import SvgIcon from "../ui/SvgIcon.vue";
+import CodeBlock from "../ui/CodeBlock.vue";
 
 const type = ref<ButtonType>("button");
 const variant = ref<ButtonVariant>("brand");
 const size = ref<ButtonSize>("medium");
 const label = ref("Save changes");
+const ariaLabel = ref("");
+const navigation = ref<ButtonNavigation | "">("");
 const disabled = ref(false);
 const loading = ref(false);
 const iconOnly = ref(false);
@@ -23,6 +34,7 @@ const copied = ref(false);
 
 // Avoid a literal closing tag here so it cannot terminate this SFC script block early.
 const scriptCloseTag = "</scr" + "ipt>";
+const iconMarkup = `\n<svg aria-hidden="true">\n  <use xlink:href="../../assets/img/solaris-icons-sprite.svg#thumb-up" />\n</svg>\n`;
 
 const customElementCode = computed(() => {
   const attrs = [
@@ -30,16 +42,19 @@ const customElementCode = computed(() => {
     `variant="${variant.value}"`,
     `size="${size.value}"`,
     ...(iconOnly.value ? ["icon-only"] : []),
+    ...(ariaLabel.value ? [`aria-label="${ariaLabel.value}"`] : []),
+    ...(navigation.value ? [`navigation="${navigation.value}"`] : []),
     ...(disabled.value ? ["disabled"] : []),
     ...(loading.value ? ["loading"] : []),
   ];
+  const content = iconOnly.value ? iconMarkup : label.value || "Button";
   return `<script type="module">
 import { defineOudsButton } from "@nilloq/ouds-web/components/button";
 
 defineOudsButton();
 ${scriptCloseTag}
 
-<ouds-button ${attrs.join(" ")}>${label.value || "Button"}</ouds-button>`;
+<ouds-button ${attrs.join(" ")}>${content}</ouds-button>`;
 });
 
 const vueCode = computed(() => {
@@ -48,15 +63,18 @@ const vueCode = computed(() => {
     `variant="${variant.value}"`,
     `size="${size.value}"`,
     ...(iconOnly.value ? [':icon-only="true"'] : []),
+    ...(ariaLabel.value ? [`aria-label="${ariaLabel.value}"`] : []),
+    ...(navigation.value ? [`navigation="${navigation.value}"`] : []),
     ...(disabled.value ? ["disabled"] : []),
     ...(loading.value ? [':loading="true"'] : []),
   ];
+  const content = iconOnly.value ? iconMarkup : label.value || "Button";
   return `<script setup>
 import { OudsButton } from "@nilloq/ouds-web/vue";
 ${scriptCloseTag}
 
 <template>
-  <OudsButton ${props.join(" ")}>${label.value || "Button"}</OudsButton>
+  <OudsButton ${props.join(" ")}>${content}</OudsButton>
 </template>`;
 });
 
@@ -64,45 +82,27 @@ const displayedCode = computed(() =>
   codeDisplayMode.value === "html" ? customElementCode.value : vueCode.value,
 );
 
-async function copyCode() {
-  try {
-    await navigator.clipboard.writeText(displayedCode.value);
-    copied.value = true;
-    window.setTimeout(() => (copied.value = false), 1500);
-  } catch {
-    copied.value = false;
-  }
-}
-
 function resetButton() {
   variant.value = "brand";
   size.value = "medium";
   type.value = "button";
   label.value = "Save changes";
+  ariaLabel.value = "";
+  navigation.value = "";
   disabled.value = false;
   iconOnly.value = false;
   loading.value = false;
   clicks.value = 0;
 }
 
-const variantSelectOptions = computed(() => [
-  { label: "Default", value: "default" },
-  { label: "Strong", value: "strong" },
-  { label: "Brand", value: "brand" },
-  { label: "Minimal", value: "minimal" },
-  { label: "Negative", value: "negative" },
-]);
+const variantSelectOptions = buttonVariants.map((value) => ({ label: value, value }));
 
-const sizeSelectOptions = computed(() => [
-  { label: "Medium", value: "medium" },
-  { label: "Small", value: "small" },
-]);
-
-const typeSelectOptions = computed(() => [
-  { label: "Button", value: "button" },
-  { label: "Submit", value: "submit" },
-  { label: "Reset", value: "reset" },
-]);
+const sizeSelectOptions = buttonSizes.map((value) => ({ label: value, value }));
+const typeSelectOptions = buttonTypes.map((value) => ({ label: value, value }));
+const navigationSelectOptions = [
+  { label: "None", value: "" },
+  ...buttonNavigations.map((value) => ({ label: value, value })),
+];
 </script>
 
 <template>
@@ -144,9 +144,13 @@ const typeSelectOptions = computed(() => [
               :icon-only="iconOnly"
               :disabled="disabled"
               :loading="loading"
+              :aria-label="ariaLabel || undefined"
+              :navigation="navigation || undefined"
               @click="clicks++"
-              >{{ label || "Button" }}</OudsButton
             >
+              <SvgIcon v-if="iconOnly" name="thumb-up" />
+              <template v-else>{{ label }}</template>
+            </OudsButton>
             <p class="text-muted mb-none" aria-live="polite">Activated {{ clicks }} times</p>
           </div>
         </div>
@@ -162,26 +166,34 @@ const typeSelectOptions = computed(() => [
                 :options="variantSelectOptions"
               />
               <OudsSelect v-model="size" outlined label="Size" :options="sizeSelectOptions" />
+              <OudsSelect
+                v-model="navigation"
+                outlined
+                label="Navigation"
+                :options="navigationSelectOptions"
+              />
             </div>
             <div class="d-flex flex-column">
-              <OudsCheckbox v-model="disabled" label="Disabled" />
-              <OudsCheckbox v-model="iconOnly" label="Icon only styling" />
-              <OudsCheckbox v-model="loading" label="Loading" />
+              <OudsCheckbox v-model="disabled" label="disabled" />
+              <OudsCheckbox v-model="iconOnly" label="icon-only" />
+              <OudsTextInput
+                v-model="ariaLabel"
+                outlined
+                label="aria-label"
+                placeholder="For icon-only buttons"
+              />
+              <OudsCheckbox v-model="loading" label="loading" />
             </div>
           </form>
         </div>
       </div>
 
       <div class="border-top border-default">
-        <div class="d-flex justify-content-end p-medium">
-          <OudsButton type="button" class="copy-button" size="small" @click="copyCode">
-            {{ copied ? "Copied" : "Copy code" }}
-          </OudsButton>
-        </div>
-        <pre
-          class="bg-inverse-low p-medium mb-none"
+        <CodeBlock
+          :code="displayedCode"
+          :language="codeDisplayMode"
           :aria-label="codeDisplayMode === 'html' ? 'Custom element code' : 'Vue code'"
-        ><code data-bs-theme="dark">{{ displayedCode }}</code></pre>
+        />
       </div>
     </section>
 
@@ -200,19 +212,25 @@ const typeSelectOptions = computed(() => [
           <tbody>
             <tr>
               <th scope="row"><code>variant</code></th>
-              <td><code>default | strong | brand | minimal | negative</code></td>
+              <td>
+                <code>{{ buttonVariants.join(" | ") }}</code>
+              </td>
               <td><code>default</code></td>
               <td>Visual style.</td>
             </tr>
             <tr>
               <th scope="row"><code>size</code></th>
-              <td><code>medium | small</code></td>
+              <td>
+                <code>{{ buttonSizes.join(" | ") }}</code>
+              </td>
               <td><code>medium</code></td>
               <td>Button size.</td>
             </tr>
             <tr>
               <th scope="row"><code>type</code></th>
-              <td><code>button | submit | reset</code></td>
+              <td>
+                <code>{{ buttonTypes.join(" | ") }}</code>
+              </td>
               <td><code>button</code></td>
               <td>Native button behavior when used in a form.</td>
             </tr>
@@ -223,6 +241,22 @@ const typeSelectOptions = computed(() => [
               <td>
                 Applies icon button styling. Provide an accessible name for icon-only content.
               </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>aria-label</code></th>
+              <td><code>string</code></td>
+              <td><code>—</code></td>
+              <td>
+                Accessible name for the button, especially useful when its content is an icon.
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>navigation</code></th>
+              <td>
+                <code>{{ buttonNavigations.join(" | ") }}</code>
+              </td>
+              <td><code>—</code></td>
+              <td>Adds the matching previous or next navigation styling.</td>
             </tr>
             <tr>
               <th scope="row"><code>disabled</code></th>

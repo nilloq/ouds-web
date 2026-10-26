@@ -18,3 +18,5 @@ export function defineOudsButton(): void {
     customElements.define("ouds-button", OudsButton);
   }
 }
+
+export * from "../components/button/button.options.js";

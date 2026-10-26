@@ -1,6 +1,6 @@
-export type ButtonType = "button" | "submit" | "reset";
-export type ButtonVariant = "default" | "strong" | "brand" | "minimal" | "negative";
-export type ButtonSize = "medium" | "small";
+import type { ButtonType, ButtonVariant, ButtonSize, ButtonNavigation } from "./button.options.js";
+
+export type { ButtonType, ButtonVariant, ButtonSize, ButtonNavigation } from "./button.options.js";
 
 export type ButtonElement = HTMLElement & {
   type: ButtonType;
@@ -9,6 +9,7 @@ export type ButtonElement = HTMLElement & {
   iconOnly: boolean;
   disabled: boolean;
   loading: boolean;
+  navigation?: ButtonNavigation;
 };
 
 export type ButtonConstructor = CustomElementConstructor & {
