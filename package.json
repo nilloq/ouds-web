@@ -104,6 +104,7 @@
     "@vitejs/plugin-vue": "^6.0.10",
     "@vueuse/core": "^15.0.0",
     "bumpp": "^12.3.0",
+    "marked": "^18.1.1",
     "shiki": "^4.5.0",
     "shiki-transformer-copy-button": "^0.0.6",
     "typescript": "^5.9.3",

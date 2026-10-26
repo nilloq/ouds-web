@@ -26,5 +26,7 @@ function updateChange(event: Event): void {
     <template v-if="$slots.leading" #leading><slot name="leading" /></template>
     <template v-if="$slots.trailing" #trailing><slot name="trailing" /></template>
     <template v-if="$slots.helper" #helper><slot name="helper" /></template>
+    <template v-if="$slots.error" #error><slot name="error" /></template>
+    <template v-if="$slots['helper-link']" #helper-link><slot name="helper-link" /></template>
   </TextInputField>
 </template>

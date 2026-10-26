@@ -14,6 +14,7 @@ import {
   type ButtonSize,
   type ButtonNavigation,
 } from "@nilloq/ouds-web/vue";
+import { defineOudsButton } from "@nilloq/ouds-web/components/button";
 import { useStore } from "../../utils/store";
 import SvgIcon from "../ui/SvgIcon.vue";
 import CodeBlock from "../ui/CodeBlock.vue";
@@ -30,7 +31,7 @@ const iconOnly = ref(false);
 const clicks = ref(0);
 
 const { codeDisplayMode } = useStore();
-const copied = ref(false);
+defineOudsButton();
 
 // Avoid a literal closing tag here so it cannot terminate this SFC script block early.
 const scriptCloseTag = "</scr" + "ipt>";
@@ -138,6 +139,7 @@ const navigationSelectOptions = [
             aria-label="Button preview"
           >
             <OudsButton
+              v-if="codeDisplayMode === 'vue'"
               :variant="variant"
               :size="size"
               :type="type"
@@ -151,6 +153,21 @@ const navigationSelectOptions = [
               <SvgIcon v-if="iconOnly" name="thumb-up" />
               <template v-else>{{ label }}</template>
             </OudsButton>
+            <ouds-button
+              v-else
+              :variant="variant"
+              :size="size"
+              :type="type"
+              :icon-only="iconOnly"
+              :disabled="disabled"
+              :loading="loading"
+              :aria-label="ariaLabel || undefined"
+              :navigation="navigation || undefined"
+              @click="clicks++"
+            >
+              <SvgIcon v-if="iconOnly" name="thumb-up" />
+              <template v-else>{{ label }}</template>
+            </ouds-button>
             <p class="text-muted mb-none" aria-live="polite">Activated {{ clicks }} times</p>
           </div>
         </div>
@@ -298,14 +315,5 @@ const navigationSelectOptions = [
 <style scoped>
 .preview {
   min-height: 15rem;
-}
-
-pre code {
-  font: ui-monospace, SFMono-Regular, Consolas, monospace;
-}
-
-p code,
-li code {
-  font-size: 0.9em;
 }
 </style>

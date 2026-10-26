@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import ThemeSwitch from "./ui/ThemeSwitch.vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 </script>
 
 <template>
-  <header>
+  <header class="sticky-top">
     <nav class="navbar lg:navbar-expand" aria-label="Global navigation">
       <div class="container-fluid container-max-width">
         <div class="navbar-brand me-auto lg:me-xlarge">
@@ -31,10 +33,11 @@ import ThemeSwitch from "./ui/ThemeSwitch.vue";
         </button>
         <div id="global-header-1.1" class="navbar-collapse collapse lg:me-auto global-header-1">
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <RouterLink class="nav-link active" to="/components" aria-current="page">
-                Components
-              </RouterLink>
+            <li class="nav-item" :aria-current="route.path === '/' ? 'page' : undefined">
+              <RouterLink class="nav-link" to="/">Get started</RouterLink>
+            </li>
+            <li class="nav-item" :aria-current="route.path === '/components' ? 'page' : undefined">
+              <RouterLink class="nav-link" to="/components"> Components </RouterLink>
             </li>
           </ul>
         </div>

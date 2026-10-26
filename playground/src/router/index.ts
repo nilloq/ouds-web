@@ -14,23 +14,29 @@ const routes = [
   },
   {
     path: "/components",
-    name: "components",
     component: () => import("../views/Components.vue"),
-    children: Object.entries(componentItems).map(([file, component]) => {
-      const name =
-        file
-          .split("/")
-          .pop()
-          ?.replace(/\.vue$/, "")
-          .replace(/([a-z])([A-Z])/g, "$1-$2")
-          .toLowerCase() ?? "";
+    children: [
+      {
+        path: "",
+        name: "components",
+        component: () => import("../views/ComponentsList.vue"),
+      },
+      ...Object.entries(componentItems).map(([file, component]) => {
+        const name =
+          file
+            .split("/")
+            .pop()
+            ?.replace(/\.vue$/, "")
+            .replace(/([a-z])([A-Z])/g, "$1-$2")
+            .toLowerCase() ?? "";
 
-      return {
-        path: name,
-        name,
-        component,
-      };
-    }),
+        return {
+          path: name,
+          name,
+          component,
+        };
+      }),
+    ],
   },
   {
     path: "/:pathMatch(.*)*",
