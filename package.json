@@ -1,6 +1,6 @@
 {
   "name": "@nilloq/ouds-web",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Vue components and framework-independent custom elements styled with OUDS Web.",
   "license": "MIT",
   "files": [
