@@ -20,6 +20,8 @@ const {
   readonly = false,
   required = false,
   invalid = false,
+  maxWidth = false,
+  loading = false,
 } = defineProps<{
   id?: string;
   label?: string;
@@ -37,6 +39,8 @@ const {
   readonly?: boolean;
   required?: boolean;
   invalid?: boolean;
+  maxWidth?: boolean;
+  loading?: boolean;
 }>();
 
 const attrs = useAttrs();
@@ -50,22 +54,27 @@ const helperLinkId = computed(() => `${inputId.value}-helper-link`);
 const describedBy = computed(() => {
   const ids = [attrs["aria-describedby"] as string | undefined];
   if (helperText && !invalid) ids.push(helperId.value);
-  if (invalid && (errorText || slots.error)) ids.push(errorId.value);
+  if (invalid && (errorText || slots["error-text"])) ids.push(errorId.value);
   if (helperLinkHref && (helperLink || slots["helper-link"])) {
     ids.push(helperLinkId.value);
   }
   return ids.filter(Boolean).join(" ") || undefined;
 });
-const containerClasses = computed(() => [
+const textInputClasses = computed(() => ["text-input", { "component-max-width": maxWidth }]);
+const textInputContainerClasses = computed(() => [
   "text-input-container",
   { "text-input-container-outlined": outlined },
+]);
+const textInputFieldClasses = computed(() => [
+  "text-input-field",
+  { "loading-indeterminate": loading },
 ]);
 </script>
 
 <template>
-  <div class="text-input">
-    <div :class="containerClasses">
-      <slot name="leading" />
+  <div :class="textInputClasses">
+    <div :class="textInputContainerClasses">
+      <slot name="leading-icon" />
       <label :id="labelId" :for="inputId" :class="{ 'is-required': required }">
         <slot name="label">{{ label }}</slot>
       </label>
@@ -79,7 +88,7 @@ const containerClasses = computed(() => [
           v-bind="attrs"
           :id="inputId"
           :type="type"
-          class="text-input-field"
+          :class="textInputFieldClasses"
           :placeholder="placeholder"
           :value="value"
           :disabled="disabled"
@@ -94,7 +103,7 @@ const containerClasses = computed(() => [
         v-bind="attrs"
         :id="inputId"
         :type="type"
-        class="text-input-field"
+        :class="textInputFieldClasses"
         :placeholder="placeholder"
         :value="value"
         :disabled="disabled"
@@ -103,13 +112,24 @@ const containerClasses = computed(() => [
         :aria-describedby="describedBy"
         :aria-invalid="invalid"
       />
-      <slot name="trailing" />
+      <template v-if="loading">
+        <svg
+          viewBox="0 0 40 40"
+          xmlns="http://www.w3.org/2000/svg"
+          class="loader"
+          aria-hidden="true"
+        >
+          <circle class="loader-inner" cx="20" cy="20" r="17"></circle>
+        </svg>
+        <span role="status" class="visually-hidden">Loading</span>
+      </template>
+      <slot v-else name="trailing-action" />
     </div>
-    <p v-if="helperText && !invalid" :id="helperId" class="helper-text">
-      <slot name="helper">{{ helperText }}</slot>
+    <p v-if="(helperText || $slots['helper-text']) && !invalid" :id="helperId" class="helper-text">
+      <slot name="helper-text">{{ helperText }}</slot>
     </p>
-    <p v-if="invalid && (errorText || $slots.error)" :id="errorId" class="error-text">
-      <slot name="error">{{ errorText }}</slot>
+    <p v-if="invalid && (errorText || $slots['error-text'])" :id="errorId" class="error-text">
+      <slot name="error-text">{{ errorText }}</slot>
     </p>
     <a
       v-if="helperLinkHref && (helperLink || $slots['helper-link'])"

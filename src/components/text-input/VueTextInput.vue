@@ -23,10 +23,12 @@ function updateChange(event: Event): void {
 <template>
   <TextInputField v-bind="$attrs" :value="modelValue" @input="updateInput" @change="updateChange">
     <template v-if="$slots.label" #label><slot name="label" /></template>
-    <template v-if="$slots.leading" #leading><slot name="leading" /></template>
-    <template v-if="$slots.trailing" #trailing><slot name="trailing" /></template>
-    <template v-if="$slots.helper" #helper><slot name="helper" /></template>
-    <template v-if="$slots.error" #error><slot name="error" /></template>
+    <template v-if="$slots['leading-icon']" #leading-icon><slot name="leading-icon" /></template>
+    <template v-if="$slots['trailing-action']" #trailing-action
+      ><slot name="trailing-action"
+    /></template>
+    <template v-if="$slots['helper-text']" #helper-text><slot name="helper-text" /></template>
+    <template v-if="$slots['error-text']" #error-text><slot name="error-text" /></template>
     <template v-if="$slots['helper-link']" #helper-link><slot name="helper-link" /></template>
   </TextInputField>
 </template>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { OudsCheckbox, OudsSelect, OudsTextInput } from "@nilloq/ouds-web/vue";
+import { OudsButton, OudsCheckbox, OudsSelect, OudsTextInput } from "@nilloq/ouds-web/vue";
 import { defineOudsTextInput } from "@nilloq/ouds-web/components/text-input";
 import ComponentPlayground from "../ui/ComponentPlayground.vue";
+import SvgIcon from "../ui/SvgIcon.vue";
 import { useStore } from "../../utils/store";
 
 const { codeDisplayMode } = useStore();
@@ -22,6 +23,10 @@ const disabled = ref(false);
 const readonly = ref(false);
 const required = ref(false);
 const invalid = ref(false);
+const maxWidth = ref(false);
+const loading = ref(false);
+const showLeadingIcon = ref(false);
+const showTrailingAction = ref(false);
 // Avoid a literal closing tag here so it cannot terminate this SFC script block early.
 const scriptCloseTag = "</scr" + "ipt>";
 
@@ -46,6 +51,10 @@ function reset() {
   readonly.value = false;
   required.value = false;
   invalid.value = false;
+  maxWidth.value = false;
+  loading.value = false;
+  showLeadingIcon.value = false;
+  showTrailingAction.value = false;
 }
 
 function escaped(value: string) {
@@ -53,6 +62,18 @@ function escaped(value: string) {
 }
 
 const generatedCode = computed(() => {
+  const slotSvg = (name: string) =>
+    `<svg aria-hidden="true" focusable="false"><use xlink:href="/assets/img/solaris-icons-sprite.svg#${name}" /></svg>`;
+  const leadingSlot = showLeadingIcon.value
+    ? codeDisplayMode.value === "html"
+      ? `\n  <svg slot="leading-icon" aria-hidden="true" focusable="false"><use xlink:href="/assets/img/solaris-icons-sprite.svg#search" /></svg>`
+      : `\n    <template #leading-icon>\n      ${slotSvg("search")}\n    </template>`
+    : "";
+  const trailingSlot = showTrailingAction.value
+    ? codeDisplayMode.value === "html"
+      ? `\n  <button slot="trailing-action" type="button" class="btn btn-minimal btn-icon" aria-label="Clear input">${slotSvg("delete-cross-round")}</button>`
+      : `\n    <template #trailing-action>\n      <OudsButton type="button" variant="minimal" icon-only aria-label="Clear input" @click="value = ''">\n        ${slotSvg("delete-cross-round")}\n      </OudsButton>\n    </template>`
+    : "";
   const attrs = [
     `label="${escaped(label.value)}"`,
     ...(placeholder.value ? [`placeholder="${escaped(placeholder.value)}"`] : []),
@@ -68,13 +89,15 @@ const generatedCode = computed(() => {
     ...(readonly.value ? ["readonly"] : []),
     ...(required.value ? ["required"] : []),
     ...(invalid.value ? ["invalid"] : []),
+    ...(maxWidth.value ? ["max-width"] : []),
+    ...(loading.value ? ["loading"] : []),
   ];
 
   if (codeDisplayMode.value === "html") {
-    return `<script type="module">\nimport { defineOudsTextInput } from "@nilloq/ouds-web/components/text-input";\n\ndefineOudsTextInput();\n${scriptCloseTag}\n\n<ouds-text-input\n  ${attrs.join("\n  ")}\n/>`;
+    return `<script type="module">\nimport { defineOudsTextInput } from "@nilloq/ouds-web/components/text-input";\n\ndefineOudsTextInput();\n${scriptCloseTag}\n\n<ouds-text-input\n  ${attrs.join("\n  ")}\n>${leadingSlot}${trailingSlot}\n</ouds-text-input>`;
   }
 
-  return `<script setup>\nimport { ref } from "vue";\nimport { OudsTextInput } from "@nilloq/ouds-web/vue";\n\nconst value = ref("");\n${scriptCloseTag}\n\n<template>\n  <OudsTextInput\n    v-model="value"\n    ${attrs.join("\n    ")}\n  />\n</template>`;
+  return `<script setup>\nimport { ref } from "vue";\nimport { OudsButton, OudsTextInput } from "@nilloq/ouds-web/vue";\n\nconst value = ref("");\n${scriptCloseTag}\n\n<template>\n  <OudsTextInput\n    v-model="value"\n    ${attrs.join("\n    ")}\n  >${leadingSlot}${trailingSlot}\n  </OudsTextInput>\n</template>`;
 });
 
 function updateCustomElementValue(event: Event) {
@@ -90,7 +113,11 @@ function updateCustomElementValue(event: Event) {
 
     <header class="mb-large">
       <h1>Text Input</h1>
-      <p>A form control for entering and editing text.</p>
+      <p>
+        An OUDS text input for entering and editing text. It uses the OUDS floating-label structure
+        and forwards native input attributes such as <code>autocomplete</code> and
+        <code>aria-describedby</code> to the input.
+      </p>
     </header>
 
     <ComponentPlayground
@@ -118,9 +145,25 @@ function updateCustomElementValue(event: Event) {
           :readonly="readonly"
           :required="required"
           :invalid="invalid"
-        />
+          :max-width="maxWidth"
+          :loading="loading"
+        >
+          <template v-if="showLeadingIcon" #leading-icon><SvgIcon name="search" /></template>
+          <template v-if="showTrailingAction" #trailing-action>
+            <OudsButton
+              type="button"
+              variant="minimal"
+              icon-only
+              aria-label="Clear input"
+              @click="value = ''"
+            >
+              <SvgIcon name="delete-cross-round" />
+            </OudsButton>
+          </template>
+        </OudsTextInput>
         <ouds-text-input
           v-else
+          :key="`${showLeadingIcon}-${showTrailingAction}`"
           :label="label"
           :placeholder="placeholder || undefined"
           :helper-text="helperText"
@@ -135,9 +178,35 @@ function updateCustomElementValue(event: Event) {
           :readonly="readonly"
           :required="required"
           :invalid="invalid"
+          :max-width="maxWidth"
+          :loading="loading"
           :value="value"
           @input="updateCustomElementValue"
-        />
+        >
+          <svg
+            v-if="showLeadingIcon"
+            slot="leading-icon"
+            width="24"
+            height="24"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <use xlink:href="../../assets/img/solaris-icons-sprite.svg#search" />
+          </svg>
+          <button
+            v-if="showTrailingAction"
+            slot="trailing-action"
+            type="button"
+            class="btn btn-minimal btn-icon"
+            aria-label="Clear input"
+            @click="value = ''"
+          >
+            <svg width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+              <use xlink:href="../../assets/img/solaris-icons-sprite.svg#delete-cross-round" />
+            </svg>
+          </button>
+        </ouds-text-input>
       </template>
 
       <template #controls>
@@ -171,6 +240,8 @@ function updateCustomElementValue(event: Event) {
           <OudsCheckbox v-model="required" label="required" />
           <OudsCheckbox v-model="disabled" label="disabled" />
           <OudsCheckbox v-model="readonly" label="readonly" />
+          <OudsCheckbox v-model="maxWidth" label="max-width" />
+          <OudsCheckbox v-model="loading" label="loading" />
           <OudsCheckbox v-model="invalid" label="invalid" />
           <OudsTextInput
             v-model="errorText"
@@ -179,6 +250,16 @@ function updateCustomElementValue(event: Event) {
             placeholder="Shown when invalid"
           />
         </div>
+        <fieldset class="d-flex flex-column border-top border-default mt-large pt-large">
+          <legend class="mb-xsmall">Slots (samples)</legend>
+          <p>
+            Enable or disable the respective slots for the text input component. Sample leading icon
+            and trailing action will be shown accordingly, but you should customize the slots
+            content as needed.
+          </p>
+          <OudsCheckbox v-model="showLeadingIcon" label="Show leading icon" />
+          <OudsCheckbox v-model="showTrailingAction" label="Show clear action" />
+        </fieldset>
       </template>
     </ComponentPlayground>
 
@@ -232,13 +313,19 @@ function updateCustomElementValue(event: Event) {
               <th scope="row"><code>helper-text</code></th>
               <td><code>string</code></td>
               <td><code>empty string</code></td>
-              <td>Supporting text displayed below the input when it is not invalid.</td>
+              <td>
+                Supporting text displayed below the input and associated with the input through
+                <code>aria-describedby</code>.
+              </td>
             </tr>
             <tr>
               <th scope="row"><code>error-text</code></th>
               <td><code>string</code></td>
               <td><code>empty string</code></td>
-              <td>Error message displayed when <code>invalid</code> is true.</td>
+              <td>
+                Error message displayed when <code>invalid</code> is true and associated with the
+                input through <code>aria-describedby</code>.
+              </td>
             </tr>
             <tr>
               <th scope="row"><code>helper-link</code></th>
@@ -282,7 +369,24 @@ function updateCustomElementValue(event: Event) {
               <th scope="row"><code>required</code></th>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Marks the input as required and indicates this on the label.</td>
+              <td>
+                Sets the native <code>required</code> attribute and applies the required indicator
+                to the label.
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>max-width</code></th>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Constrains the text input to the OUDS component maximum width.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>loading</code></th>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                Shows a loading indicator and status announcement in place of trailing content.
+              </td>
             </tr>
             <tr>
               <th scope="row"><code>invalid</code></th>
@@ -299,10 +403,11 @@ function updateCustomElementValue(event: Event) {
       <h2>Slots</h2>
       <p><code>label</code> — replaces the visible label text.</p>
       <p>
-        <code>leading</code> / <code>trailing</code> — content placed before or after the input.
+        <code>leading-icon</code> / <code>trailing-action</code> — content placed before or after
+        the input.
       </p>
-      <p><code>helper</code> — replaces the helper text content.</p>
-      <p><code>error</code> — replaces the error message when <code>invalid</code> is true.</p>
+      <p><code>helper-text</code> — replaces the helper text content.</p>
+      <p><code>error-text</code> — replaces the error message when <code>invalid</code> is true.</p>
       <p><code>helper-link</code> — replaces the helper link text.</p>
     </section>
 

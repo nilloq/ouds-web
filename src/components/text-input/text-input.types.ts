@@ -14,6 +14,8 @@ export type TextInputElement = HTMLElement & {
   readonly: boolean;
   required: boolean;
   invalid: boolean;
+  maxWidth: boolean;
+  loading: boolean;
 };
 
 export type TextInputConstructor = CustomElementConstructor & {

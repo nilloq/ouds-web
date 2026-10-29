@@ -112,10 +112,10 @@ const navigationSelectOptions = [
       <a href="/components">Components</a><span aria-hidden="true"> / </span><span>Button</span>
     </nav>
 
-    <div>
+    <header class="mb-large">
       <h1>Button</h1>
       <p>Buttons let people trigger an action, such as submitting a form or opening a dialog.</p>
-    </div>
+    </header>
 
     <!-- Playground -->
     <section
