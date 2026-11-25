@@ -21,6 +21,11 @@ const components = [
     description: "A compact label for showing status, category, or metadata.",
   },
   {
+    name: "Text Area",
+    path: "/components/text-area",
+    description: "A form control for entering and editing multiple lines of text.",
+  },
+  {
     name: "Text Input",
     path: "/components/text-input",
     description: "A form control for entering and editing text.",

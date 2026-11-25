@@ -23,6 +23,7 @@ export default defineConfig({
         "vue-select": "src/vue/select.ts",
         "vue-checkbox": "src/vue/checkbox.ts",
         "vue-text-input": "src/vue/text-input.ts",
+        "vue-text-area": "src/vue/text-area.ts",
       },
       formats: ["es"],
       fileName: (_format, entryName) => `${entryName}.js`,

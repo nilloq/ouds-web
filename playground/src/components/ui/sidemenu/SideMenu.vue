@@ -28,6 +28,11 @@ import CodeDisplayMode from "./CodeDisplayMode.vue";
         </RouterLink>
       </li>
       <li>
+        <RouterLink to="/components/text-area" class="list-group-item list-group-item-action">
+          Text Area
+        </RouterLink>
+      </li>
+      <li>
         <RouterLink to="/components/text-input" class="list-group-item list-group-item-action">
           Text Input
         </RouterLink>

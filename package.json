@@ -37,6 +37,10 @@
       "types": "./dist/types/text-input.d.ts",
       "import": "./dist/text-input.js"
     },
+    "./text-area": {
+      "types": "./dist/types/text-area.d.ts",
+      "import": "./dist/text-area.js"
+    },
     "./components": {
       "types": "./dist/types/elements/index.d.ts",
       "import": "./dist/elements.js"
@@ -61,6 +65,10 @@
       "types": "./dist/types/elements/text-input.d.ts",
       "import": "./dist/elements-text-input.js"
     },
+    "./components/text-area": {
+      "types": "./dist/types/elements/text-area.d.ts",
+      "import": "./dist/elements-text-area.js"
+    },
     "./vue": {
       "types": "./dist/types/vue/index.d.ts",
       "import": "./dist/vue.js"
@@ -84,6 +92,10 @@
     "./vue/text-input": {
       "types": "./dist/types/vue/text-input.d.ts",
       "import": "./dist/vue-text-input.js"
+    },
+    "./vue/text-area": {
+      "types": "./dist/types/vue/text-area.d.ts",
+      "import": "./dist/vue-text-area.js"
     },
     "./package.json": "./package.json"
   },
