@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import OudsDocumentationLink from "../ui/OudsDocumentationLink.vue";
 import { computed, ref } from "vue";
 import { OudsButton, OudsCheckbox, OudsSelect, OudsTextInput } from "@nilloq/ouds-web/vue";
 import { defineOudsTextInput } from "@nilloq/ouds-web/components/text-input";
@@ -69,11 +70,13 @@ const generatedCode = computed(() => {
       ? `\n  <svg slot="leading-icon" aria-hidden="true" focusable="false"><use xlink:href="/assets/img/solaris-icons-sprite.svg#search" /></svg>`
       : `\n    <template #leading-icon>\n      ${slotSvg("search")}\n    </template>`
     : "";
-  const trailingSlot = showTrailingAction.value
-    ? codeDisplayMode.value === "html"
-      ? `\n  <button slot="trailing-action" type="button" class="btn btn-minimal btn-icon" aria-label="Clear input">${slotSvg("delete-cross-round")}</button>`
-      : `\n    <template #trailing-action>\n      <OudsButton type="button" variant="minimal" icon-only aria-label="Clear input" @click="value = ''">\n        ${slotSvg("delete-cross-round")}\n      </OudsButton>\n    </template>`
-    : "";
+  const actionDisabled = disabled.value || readonly.value;
+  const trailingSlot =
+    showTrailingAction.value && !loading.value
+      ? codeDisplayMode.value === "html"
+        ? `\n  <button slot="trailing-action" type="button" class="btn btn-minimal btn-icon" aria-label="Clear input"${actionDisabled ? " disabled" : ""}>${slotSvg("delete-cross-round")}</button>`
+        : `\n    <template #trailing-action="{ disabled }">\n      <OudsButton type="button" variant="minimal" icon-only :disabled="disabled" aria-label="Clear input" @click="value = ''">\n        ${slotSvg("delete-cross-round")}\n      </OudsButton>\n    </template>`
+      : "";
   const attrs = [
     `label="${escaped(label.value)}"`,
     ...(placeholder.value ? [`placeholder="${escaped(placeholder.value)}"`] : []),
@@ -112,7 +115,10 @@ function updateCustomElementValue(event: Event) {
     </nav>
 
     <header class="mb-large">
-      <h1>Text Input</h1>
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-small mb-small">
+        <h1 class="mb-none">Text Input</h1>
+        <OudsDocumentationLink component="text-input" label="Text Input" />
+      </div>
       <p>
         An OUDS text input for entering and editing text. It uses the OUDS floating-label structure
         and forwards native input attributes such as <code>autocomplete</code> and
@@ -149,11 +155,12 @@ function updateCustomElementValue(event: Event) {
           :loading="loading"
         >
           <template v-if="showLeadingIcon" #leading-icon><SvgIcon name="search" /></template>
-          <template v-if="showTrailingAction" #trailing-action>
+          <template v-if="showTrailingAction" #trailing-action="{ disabled: actionDisabled }">
             <OudsButton
               type="button"
               variant="minimal"
               icon-only
+              :disabled="actionDisabled"
               aria-label="Clear input"
               @click="value = ''"
             >
@@ -199,6 +206,7 @@ function updateCustomElementValue(event: Event) {
             slot="trailing-action"
             type="button"
             class="btn btn-minimal btn-icon"
+            :disabled="disabled || readonly || loading"
             aria-label="Clear input"
             @click="value = ''"
           >
@@ -292,7 +300,7 @@ function updateCustomElementValue(event: Event) {
               <th scope="row"><code>placeholder</code></th>
               <td><code>string</code></td>
               <td><code> </code></td>
-              <td>Placeholder shown while the input is empty.</td>
+              <td>Placeholder text. An empty value uses a single space for floating labels.</td>
             </tr>
             <tr>
               <th scope="row"><code>value</code></th>
@@ -378,7 +386,9 @@ function updateCustomElementValue(event: Event) {
               <th scope="row"><code>max-width</code></th>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Constrains the text input to the OUDS component maximum width.</td>
+              <td>
+                Constrains the text input width to keep the field and its label close together.
+              </td>
             </tr>
             <tr>
               <th scope="row"><code>loading</code></th>
@@ -404,7 +414,10 @@ function updateCustomElementValue(event: Event) {
       <p><code>label</code> — replaces the visible label text.</p>
       <p>
         <code>leading-icon</code> / <code>trailing-action</code> — content placed before or after
-        the input.
+        the input. In Vue, <code>trailing-action</code> exposes a <code>disabled</code> slot
+        property; bind it to the action button to respect disabled and read-only states. For custom
+        elements, disable the slotted button when the input is disabled or read-only. Trailing
+        content is replaced by the loader while loading.
       </p>
       <p><code>helper-text</code> — replaces the helper text content.</p>
       <p><code>error-text</code> — replaces the error message when <code>invalid</code> is true.</p>

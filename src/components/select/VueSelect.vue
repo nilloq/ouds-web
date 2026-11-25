@@ -17,6 +17,10 @@ function updateValue(event: Event): void {
 <template>
   <SelectField v-bind="$attrs" :value="modelValue" @change="updateValue">
     <template v-if="$slots.label" #label><slot name="label" /></template>
-    <slot />
+    <template v-if="$slots['leading-icon']" #leading-icon><slot name="leading-icon" /></template>
+    <template v-if="$slots['helper-text']" #helper-text><slot name="helper-text" /></template>
+    <template v-if="$slots['error-text']" #error-text><slot name="error-text" /></template>
+    <template v-if="$slots['helper-link']" #helper-link><slot name="helper-link" /></template>
+    <template v-if="$slots.default" #default><slot /></template>
   </SelectField>
 </template>

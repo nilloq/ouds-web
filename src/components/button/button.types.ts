@@ -9,6 +9,8 @@ export type ButtonElement = HTMLElement & {
   iconOnly: boolean;
   disabled: boolean;
   loading: boolean;
+  expand: boolean;
+  onColoredBg: boolean;
   navigation?: ButtonNavigation;
 };
 

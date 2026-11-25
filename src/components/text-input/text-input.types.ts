@@ -1,6 +1,7 @@
 export type TextInputElement = HTMLElement & {
   id: string;
   label: string;
+  placeholder: string;
   helperText: string;
   errorText: string;
   helperLink: string;

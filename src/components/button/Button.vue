@@ -9,6 +9,8 @@ const {
   iconOnly = false,
   ariaLabel,
   navigation,
+  expand = false,
+  onColoredBg = false,
   disabled = false,
   loading = false,
 } = defineProps<{
@@ -18,6 +20,8 @@ const {
   iconOnly?: boolean;
   ariaLabel?: string;
   navigation?: ButtonNavigation;
+  expand?: boolean;
+  onColoredBg?: boolean;
   disabled?: boolean;
   loading?: boolean;
 }>();
@@ -29,6 +33,8 @@ const buttonClasses = computed(() => {
     {
       "btn-icon": iconOnly,
       "btn-small": size === "small",
+      "btn-expand": expand,
+      "btn-on-colored-bg": onColoredBg,
       "loading-indeterminate": loading,
     },
     ...(navigation ? [`btn-${navigation}`] : []),
@@ -38,7 +44,12 @@ const buttonType = computed(() => (type === "submit" || type === "reset" ? type 
 </script>
 
 <template>
-  <button :class="buttonClasses" :type="buttonType" :disabled="disabled || loading">
+  <button
+    :class="buttonClasses"
+    :type="buttonType"
+    :disabled="disabled || loading"
+    :aria-expanded="expand ? false : undefined"
+  >
     <slot />
     <span v-if="ariaLabel" class="visually-hidden">{{ ariaLabel }}</span>
     <svg

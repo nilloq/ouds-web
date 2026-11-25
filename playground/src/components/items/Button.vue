@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import OudsDocumentationLink from "../ui/OudsDocumentationLink.vue";
 import { computed, ref } from "vue";
 import {
   OudsButton,
@@ -28,6 +29,9 @@ const navigation = ref<ButtonNavigation | "">("");
 const disabled = ref(false);
 const loading = ref(false);
 const iconOnly = ref(false);
+const expand = ref(false);
+const expanded = ref(false);
+const onColoredBg = ref(false);
 const clicks = ref(0);
 
 const { codeDisplayMode } = useStore();
@@ -42,13 +46,19 @@ const customElementCode = computed(() => {
     `type="${type.value}"`,
     `variant="${variant.value}"`,
     `size="${size.value}"`,
+    ...(expand.value ? ["expand", `aria-expanded="${expanded.value}"`] : []),
+    ...(onColoredBg.value ? ["on-colored-bg"] : []),
     ...(iconOnly.value ? ["icon-only"] : []),
     ...(ariaLabel.value ? [`aria-label="${ariaLabel.value}"`] : []),
     ...(navigation.value ? [`navigation="${navigation.value}"`] : []),
     ...(disabled.value ? ["disabled"] : []),
     ...(loading.value ? ["loading"] : []),
   ];
-  const content = iconOnly.value ? iconMarkup : label.value || "Button";
+  const content = iconOnly.value
+    ? variant.value === "assistant" || navigation.value || expand.value
+      ? ""
+      : iconMarkup
+    : label.value || "Button";
   return `<script type="module">
 import { defineOudsButton } from "@nilloq/ouds-web/components/button";
 
@@ -63,13 +73,19 @@ const vueCode = computed(() => {
     `type="${type.value}"`,
     `variant="${variant.value}"`,
     `size="${size.value}"`,
+    ...(expand.value ? ["expand", `aria-expanded="${expanded.value}"`] : []),
+    ...(onColoredBg.value ? ["on-colored-bg"] : []),
     ...(iconOnly.value ? [':icon-only="true"'] : []),
     ...(ariaLabel.value ? [`aria-label="${ariaLabel.value}"`] : []),
     ...(navigation.value ? [`navigation="${navigation.value}"`] : []),
     ...(disabled.value ? ["disabled"] : []),
     ...(loading.value ? [':loading="true"'] : []),
   ];
-  const content = iconOnly.value ? iconMarkup : label.value || "Button";
+  const content = iconOnly.value
+    ? variant.value === "assistant" || navigation.value || expand.value
+      ? ""
+      : iconMarkup
+    : label.value || "Button";
   return `<script setup>
 import { OudsButton } from "@nilloq/ouds-web/vue";
 ${scriptCloseTag}
@@ -93,6 +109,9 @@ function resetButton() {
   disabled.value = false;
   iconOnly.value = false;
   loading.value = false;
+  expand.value = false;
+  expanded.value = false;
+  onColoredBg.value = false;
   clicks.value = 0;
 }
 
@@ -113,7 +132,10 @@ const navigationSelectOptions = [
     </nav>
 
     <header class="mb-large">
-      <h1>Button</h1>
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-small mb-small">
+        <h1 class="mb-none">Button</h1>
+        <OudsDocumentationLink component="buttons" label="Button" />
+      </div>
       <p>Buttons let people trigger an action, such as submitting a form or opening a dialog.</p>
     </header>
 
@@ -135,7 +157,9 @@ const navigationSelectOptions = [
       <div class="row">
         <div class="col-12 md:col-6">
           <div
-            class="d-flex flex-column justify-content-center align-items-center bg-secondary p-medium gap-small h-100 preview"
+            class="d-flex flex-column justify-content-center align-items-center p-medium gap-small h-100 preview"
+            :class="onColoredBg ? 'bg-surface-brand-primary' : 'bg-secondary'"
+            :data-bs-theme="onColoredBg ? 'light' : undefined"
             aria-label="Button preview"
           >
             <OudsButton
@@ -143,30 +167,48 @@ const navigationSelectOptions = [
               :variant="variant"
               :size="size"
               :type="type"
+              :expand="expand"
+              :aria-expanded="expand ? expanded : undefined"
+              :on-colored-bg="onColoredBg"
               :icon-only="iconOnly"
               :disabled="disabled"
               :loading="loading"
               :aria-label="ariaLabel || undefined"
               :navigation="navigation || undefined"
-              @click="clicks++"
+              @click="
+                clicks++;
+                expanded = !expanded;
+              "
             >
-              <SvgIcon v-if="iconOnly" name="thumb-up" />
-              <template v-else>{{ label }}</template>
+              <SvgIcon
+                v-if="iconOnly && variant !== 'assistant' && !navigation && !expand"
+                name="thumb-up"
+              />
+              <template v-if="!iconOnly">{{ label }}</template>
             </OudsButton>
             <ouds-button
               v-else
               :variant="variant"
               :size="size"
               :type="type"
+              :expand="expand"
+              :aria-expanded="expand ? expanded : undefined"
+              :on-colored-bg="onColoredBg"
               :icon-only="iconOnly"
               :disabled="disabled"
               :loading="loading"
               :aria-label="ariaLabel || undefined"
               :navigation="navigation || undefined"
-              @click="clicks++"
+              @click="
+                clicks++;
+                expanded = !expanded;
+              "
             >
-              <SvgIcon v-if="iconOnly" name="thumb-up" />
-              <template v-else>{{ label }}</template>
+              <SvgIcon
+                v-if="iconOnly && variant !== 'assistant' && !navigation && !expand"
+                name="thumb-up"
+              />
+              <template v-if="!iconOnly">{{ label }}</template>
             </ouds-button>
             <p class="text-muted mb-none" aria-live="polite">Activated {{ clicks }} times</p>
           </div>
@@ -200,6 +242,9 @@ const navigationSelectOptions = [
                 placeholder="For icon-only buttons"
               />
               <OudsCheckbox v-model="loading" label="loading" />
+              <OudsCheckbox v-model="expand" label="expand" />
+              <OudsCheckbox v-if="expand" v-model="expanded" label="aria-expanded" />
+              <OudsCheckbox v-model="onColoredBg" label="on-colored-bg" />
             </div>
           </form>
         </div>
@@ -274,6 +319,30 @@ const navigationSelectOptions = [
               </td>
               <td><code>—</code></td>
               <td>Adds the matching previous or next navigation styling.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>expand</code></th>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Adds the OUDS 1.6 expand chevron. Control its state with aria-expanded.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>aria-expanded</code></th>
+              <td><code>true | false</code></td>
+              <td><code>false</code> when expand is enabled</td>
+              <td>
+                Set the expanded state from your application. Handle click to toggle content and add
+                aria-controls with the controlled element's ID for a disclosure.
+              </td>
+            </tr>
+            <tr>
+              <th scope="row"><code>on-colored-bg</code></th>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                Adapts default, strong, and minimal buttons for colored backgrounds. Set the
+                appropriate data-bs-theme on the parent.
+              </td>
             </tr>
             <tr>
               <th scope="row"><code>disabled</code></th>

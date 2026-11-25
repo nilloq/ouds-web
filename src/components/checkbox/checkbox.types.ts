@@ -8,6 +8,10 @@ export type CheckboxElement = HTMLElement & {
   required: boolean;
   divider: boolean;
   indeterminate: boolean;
+  readonly: boolean;
+  invalid: boolean;
+  reverse: boolean;
+  maxWidth: boolean;
 };
 
 export type CheckboxConstructor = CustomElementConstructor & {

@@ -24,8 +24,8 @@ function updateChange(event: Event): void {
   <TextInputField v-bind="$attrs" :value="modelValue" @input="updateInput" @change="updateChange">
     <template v-if="$slots.label" #label><slot name="label" /></template>
     <template v-if="$slots['leading-icon']" #leading-icon><slot name="leading-icon" /></template>
-    <template v-if="$slots['trailing-action']" #trailing-action
-      ><slot name="trailing-action"
+    <template v-if="$slots['trailing-action']" #trailing-action="slotProps"
+      ><slot name="trailing-action" v-bind="slotProps"
     /></template>
     <template v-if="$slots['helper-text']" #helper-text><slot name="helper-text" /></template>
     <template v-if="$slots['error-text']" #error-text><slot name="error-text" /></template>

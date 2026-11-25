@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { marked } from "marked";
+import packageInfo from "../../../package.json" with { type: "json" };
 import markdown from "../content/get-started.md?raw";
 
-const renderedMarkdown = computed(() => marked.parse(markdown));
+const renderedMarkdown = computed(() =>
+  marked.parse(markdown.replaceAll("{{libraryVersion}}", packageInfo.version)),
+);
 </script>
 
 <template>

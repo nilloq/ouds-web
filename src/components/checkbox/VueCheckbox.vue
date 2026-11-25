@@ -18,5 +18,6 @@ function updateValue(event: Event): void {
   <CheckboxField v-bind="$attrs" :checked="modelValue" @change="updateValue">
     <template v-if="$slots.label" #label><slot name="label" /></template>
     <template v-if="$slots.asset" #asset><slot name="asset" /></template>
+    <template v-if="$slots.description" #description><slot name="description" /></template>
   </CheckboxField>
 </template>

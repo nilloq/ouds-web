@@ -1,11 +1,12 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
-    "using-ouds-web-version-1-5": {
+    "using-ouds-web-version-1-6": {
       "source": "Orange-OpenSource/ouds-web-skills",
+      "commit": "70d2e79c1e14e6dbf16f7aac48abb48b1c088492",
       "sourceType": "github",
-      "skillPath": "using-ouds-web-version-1-5/SKILL.md",
-      "computedHash": "3feb572fbdb0ab4de6c08784f9aa78d3eb68cbaa21524a0c2d80e3c2d4d7241e"
+      "skillPath": "using-ouds-web-version-1-6/SKILL.md",
+      "computedHash": "72bab63fb76a3ea2ff74c61e9c86aa25b341b0666965c5d9f8935d633d9a677c"
     }
   }
 }

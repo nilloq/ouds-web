@@ -51,15 +51,18 @@ const helperId = computed(() => `${inputId.value}-helper`);
 const errorId = computed(() => `${inputId.value}-error`);
 const labelId = computed(() => `${inputId.value}-label`);
 const helperLinkId = computed(() => `${inputId.value}-helper-link`);
-const describedBy = computed(() => {
+const loadingId = computed(() => `${inputId.value}-loading`);
+// Attributes and slot presence can change between renders without invalidating a computed value.
+function describedBy() {
   const ids = [attrs["aria-describedby"] as string | undefined];
-  if (helperText && !invalid) ids.push(helperId.value);
+  if ((helperText || slots["helper-text"]) && !invalid) ids.push(helperId.value);
   if (invalid && (errorText || slots["error-text"])) ids.push(errorId.value);
   if (helperLinkHref && (helperLink || slots["helper-link"])) {
     ids.push(helperLinkId.value);
   }
+  if (loading) ids.push(loadingId.value);
   return ids.filter(Boolean).join(" ") || undefined;
-});
+}
 const textInputClasses = computed(() => ["text-input", { "component-max-width": maxWidth }]);
 const textInputContainerClasses = computed(() => [
   "text-input-container",
@@ -89,12 +92,12 @@ const textInputFieldClasses = computed(() => [
           :id="inputId"
           :type="type"
           :class="textInputFieldClasses"
-          :placeholder="placeholder"
+          :placeholder="placeholder || ' '"
           :value="value"
           :disabled="disabled"
           :readonly="readonly"
           :required="required"
-          :aria-describedby="describedBy"
+          :aria-describedby="describedBy()"
           :aria-invalid="invalid"
         />
       </div>
@@ -104,12 +107,12 @@ const textInputFieldClasses = computed(() => [
         :id="inputId"
         :type="type"
         :class="textInputFieldClasses"
-        :placeholder="placeholder"
+        :placeholder="placeholder || ' '"
         :value="value"
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
-        :aria-describedby="describedBy"
+        :aria-describedby="describedBy()"
         :aria-invalid="invalid"
       />
       <template v-if="loading">
@@ -121,9 +124,9 @@ const textInputFieldClasses = computed(() => [
         >
           <circle class="loader-inner" cx="20" cy="20" r="17"></circle>
         </svg>
-        <span role="status" class="visually-hidden">Loading</span>
+        <span :id="loadingId" role="status" class="visually-hidden">Loading</span>
       </template>
-      <slot v-else name="trailing-action" />
+      <slot v-else name="trailing-action" :disabled="disabled || readonly" />
     </div>
     <p v-if="(helperText || $slots['helper-text']) && !invalid" :id="helperId" class="helper-text">
       <slot name="helper-text">{{ helperText }}</slot>

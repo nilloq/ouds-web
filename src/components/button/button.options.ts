@@ -1,4 +1,11 @@
-export const buttonVariants = ["default", "strong", "brand", "minimal", "negative"] as const;
+export const buttonVariants = [
+  "default",
+  "strong",
+  "brand",
+  "minimal",
+  "negative",
+  "assistant",
+] as const;
 export const buttonSizes = ["medium", "small"] as const;
 export const buttonTypes = ["button", "submit", "reset"] as const;
 export const buttonNavigations = ["previous", "next"] as const;
