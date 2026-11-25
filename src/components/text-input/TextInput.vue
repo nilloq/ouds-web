@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { computed, useAttrs, useId, useSlots } from "vue";
+import { toRef, computed, useAttrs, useId, useSlots } from "vue";
 
 defineOptions({ inheritAttrs: false });
 
 const {
-  id,
   label = "Text input",
   placeholder = " ",
   helperText = "",
   errorText = "",
   helperLink = "",
   helperLinkHref = "",
-  prefix = "",
   suffix = "",
   value = "",
   type = "text",
@@ -23,14 +21,12 @@ const {
   maxWidth = false,
   loading = false,
 } = defineProps<{
-  id?: string;
   label?: string;
   placeholder?: string;
   helperText?: string;
   errorText?: string;
   helperLink?: string;
   helperLinkHref?: string;
-  prefix?: string;
   suffix?: string;
   value?: string;
   type?: string;
@@ -44,14 +40,20 @@ const {
 }>();
 
 const attrs = useAttrs();
+const prefix = toRef(() => (attrs.prefix as string | undefined) || "");
+function inputAttrs() {
+  const { prefix: _prefix, ...forwarded } = attrs;
+  return forwarded;
+}
+const id = toRef(() => attrs.id as string | undefined);
 const slots = useSlots();
 const generatedId = useId();
-const inputId = computed(() => id || `ouds-text-input-${generatedId}`);
-const helperId = computed(() => `${inputId.value}-helper`);
-const errorId = computed(() => `${inputId.value}-error`);
-const labelId = computed(() => `${inputId.value}-label`);
-const helperLinkId = computed(() => `${inputId.value}-helper-link`);
-const loadingId = computed(() => `${inputId.value}-loading`);
+const inputId = toRef(() => id.value || `ouds-text-input-${generatedId}`);
+const helperId = toRef(() => `${inputId.value}-helper`);
+const errorId = toRef(() => `${inputId.value}-error`);
+const labelId = toRef(() => `${inputId.value}-label`);
+const helperLinkId = toRef(() => `${inputId.value}-helper-link`);
+const loadingId = toRef(() => `${inputId.value}-loading`);
 // Attributes and slot presence can change between renders without invalidating a computed value.
 function describedBy() {
   const ids = [attrs["aria-describedby"] as string | undefined];
@@ -88,7 +90,7 @@ const textInputFieldClasses = computed(() => [
         :data-bs-suffix="suffix || undefined"
       >
         <input
-          v-bind="attrs"
+          v-bind="inputAttrs()"
           :id="inputId"
           :type="type"
           :class="textInputFieldClasses"
@@ -103,7 +105,7 @@ const textInputFieldClasses = computed(() => [
       </div>
       <input
         v-else
-        v-bind="attrs"
+        v-bind="inputAttrs()"
         :id="inputId"
         :type="type"
         :class="textInputFieldClasses"

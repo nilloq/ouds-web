@@ -33,6 +33,10 @@
       "types": "./dist/types/checkbox.d.ts",
       "import": "./dist/checkbox.js"
     },
+    "./switch": {
+      "types": "./dist/types/switch.d.ts",
+      "import": "./dist/switch.js"
+    },
     "./text-input": {
       "types": "./dist/types/text-input.d.ts",
       "import": "./dist/text-input.js"
@@ -61,6 +65,10 @@
       "types": "./dist/types/elements/checkbox.d.ts",
       "import": "./dist/elements-checkbox.js"
     },
+    "./components/switch": {
+      "types": "./dist/types/elements/switch.d.ts",
+      "import": "./dist/elements-switch.js"
+    },
     "./components/text-input": {
       "types": "./dist/types/elements/text-input.d.ts",
       "import": "./dist/elements-text-input.js"
@@ -88,6 +96,10 @@
     "./vue/checkbox": {
       "types": "./dist/types/vue/checkbox.d.ts",
       "import": "./dist/vue-checkbox.js"
+    },
+    "./vue/switch": {
+      "types": "./dist/types/vue/switch.d.ts",
+      "import": "./dist/vue-switch.js"
     },
     "./vue/text-input": {
       "types": "./dist/types/vue/text-input.d.ts",

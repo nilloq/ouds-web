@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, useAttrs, useId, useSlots } from "vue";
+import { toRef, computed, useAttrs, useId, useSlots } from "vue";
 
 defineOptions({ inheritAttrs: false });
 
 const {
-  id,
   label = "Text area",
   placeholder = " ",
   helperText = "",
@@ -19,7 +18,6 @@ const {
   invalid = false,
   maxWidth = false,
 } = defineProps<{
-  id?: string;
   label?: string;
   placeholder?: string;
   helperText?: string;
@@ -36,13 +34,14 @@ const {
 }>();
 
 const attrs = useAttrs();
+const id = toRef(() => attrs.id as string | undefined);
 const slots = useSlots();
 const generatedId = useId();
-const inputId = computed(() => id || `ouds-text-area-${generatedId}`);
-const helperId = computed(() => `${inputId.value}-helper`);
-const errorId = computed(() => `${inputId.value}-error`);
-const labelId = computed(() => `${inputId.value}-label`);
-const helperLinkId = computed(() => `${inputId.value}-helper-link`);
+const inputId = toRef(() => id.value || `ouds-text-area-${generatedId}`);
+const helperId = toRef(() => `${inputId.value}-helper`);
+const errorId = toRef(() => `${inputId.value}-error`);
+const labelId = toRef(() => `${inputId.value}-label`);
+const helperLinkId = toRef(() => `${inputId.value}-helper-link`);
 // Attributes and slot presence can change between renders without invalidating a computed value.
 function describedBy() {
   const ids = [attrs["aria-describedby"] as string | undefined];

@@ -124,7 +124,7 @@ import { OudsButton } from "@nilloq/ouds-web/vue";
 </template>
 ```
 
-The package also exports `OudsTag`, `OudsCheckbox`, `OudsSelect`, and `OudsTextInput` from `@nilloq/ouds-web/vue`. To import just one component, use its subpath, such as `@nilloq/ouds-web/vue/button`.
+The package also exports `OudsTag`, `OudsCheckbox`, `OudsSwitch`, `OudsSelect`, and `OudsTextInput` from `@nilloq/ouds-web/vue`. To import just one component, use its subpath, such as `@nilloq/ouds-web/vue/button`.
 
 ## Use the components as standalone web components
 

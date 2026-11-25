@@ -177,7 +177,7 @@ function updateCustomElementValue(event: Event) {
           :error-text="errorText"
           :helper-link="helperLink"
           :helper-link-href="helperLinkHref"
-          :prefix="prefix"
+          :prefix.attr="prefix"
           :suffix="suffix"
           :type="type"
           :outlined="outlined"

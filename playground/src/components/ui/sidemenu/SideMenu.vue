@@ -18,6 +18,11 @@ import CodeDisplayMode from "./CodeDisplayMode.vue";
         </RouterLink>
       </li>
       <li>
+        <RouterLink to="/components/switch" class="list-group-item list-group-item-action">
+          Switch
+        </RouterLink>
+      </li>
+      <li>
         <RouterLink to="/components/select" class="list-group-item list-group-item-action">
           Select
         </RouterLink>

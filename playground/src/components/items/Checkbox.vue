@@ -7,6 +7,8 @@ import ComponentPlayground from "../ui/ComponentPlayground.vue";
 import SvgIcon from "../ui/SvgIcon.vue";
 import { useStore } from "../../utils/store";
 
+const svgSprite = new URL("../../assets/img/solaris-icons-sprite.svg", import.meta.url).href;
+
 const { codeDisplayMode } = useStore();
 defineOudsCheckbox();
 const defaults = () => ({
@@ -148,7 +150,7 @@ function updateChecked(event: Event) {
             @change="updateChecked"
           >
             <svg v-if="state.asset" slot="asset" aria-hidden="true">
-              <use xlink:href="../../assets/img/solaris-icons-sprite.svg#search" />
+              <use :xlink:href="`${svgSprite}#search`" />
             </svg>
             <span v-if="state.descriptionSlot" slot="description">{{ state.description }}</span>
           </ouds-checkbox>

@@ -22,6 +22,7 @@ export default defineConfig({
         "vue-tag": "src/vue/tag.ts",
         "vue-select": "src/vue/select.ts",
         "vue-checkbox": "src/vue/checkbox.ts",
+        "vue-switch": "src/vue/switch.ts",
         "vue-text-input": "src/vue/text-input.ts",
         "vue-text-area": "src/vue/text-area.ts",
       },

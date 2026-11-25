@@ -11,6 +11,11 @@ const components = [
     description: "A control for selecting one or more options from a set.",
   },
   {
+    name: "Switch",
+    path: "/components/switch",
+    description: "A control for turning a setting on or off.",
+  },
+  {
     name: "Select",
     path: "/components/select",
     description: "A form control for choosing an option from a list.",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, useAttrs } from "vue";
 import type { ButtonType, ButtonVariant, ButtonSize, ButtonNavigation } from "./button.types.js";
 
 const {
@@ -7,7 +7,6 @@ const {
   variant = "default",
   size = "medium",
   iconOnly = false,
-  ariaLabel,
   navigation,
   expand = false,
   onColoredBg = false,
@@ -18,13 +17,15 @@ const {
   variant?: ButtonVariant;
   size?: ButtonSize;
   iconOnly?: boolean;
-  ariaLabel?: string;
   navigation?: ButtonNavigation;
   expand?: boolean;
   onColoredBg?: boolean;
   disabled?: boolean;
   loading?: boolean;
 }>();
+
+const attrs = useAttrs();
+const accessibleLabel = () => attrs["aria-label"] || attrs.ariaLabel;
 
 const buttonClasses = computed(() => {
   return [
@@ -51,7 +52,7 @@ const buttonType = computed(() => (type === "submit" || type === "reset" ? type 
     :aria-expanded="expand ? false : undefined"
   >
     <slot />
-    <span v-if="ariaLabel" class="visually-hidden">{{ ariaLabel }}</span>
+    <span v-if="accessibleLabel()" class="visually-hidden">{{ accessibleLabel() }}</span>
     <svg
       v-if="loading"
       viewBox="0 0 40 40"

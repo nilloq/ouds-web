@@ -23,6 +23,7 @@ export default defineConfig({
       "@nilloq/ouds-web/vue": resolve(projectRoot, "dist/vue.js"),
       "@nilloq/ouds-web/components/button": resolve(projectRoot, "src/elements/button.ts"),
       "@nilloq/ouds-web/components/checkbox": resolve(projectRoot, "src/elements/checkbox.ts"),
+      "@nilloq/ouds-web/components/switch": resolve(projectRoot, "src/elements/switch.ts"),
       "@nilloq/ouds-web/components/select": resolve(projectRoot, "src/elements/select.ts"),
       "@nilloq/ouds-web/components/tag": resolve(projectRoot, "src/elements/tag.ts"),
       "@nilloq/ouds-web/components/text-input": resolve(projectRoot, "src/elements/text-input.ts"),

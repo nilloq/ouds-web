@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, useAttrs, useId, useSlots, type SelectHTMLAttributes } from "vue";
+import { toRef, computed, useAttrs, useId, useSlots, type SelectHTMLAttributes } from "vue";
 
 defineOptions({ inheritAttrs: false });
 
 const {
-  id,
   label = "Select",
   options = [],
   helperText = "",
@@ -19,7 +18,6 @@ const {
   maxWidth = false,
   loading = false,
 } = defineProps<{
-  id?: string;
   label?: string;
   options?: { label: string; value: string }[];
   helperText?: string;
@@ -36,14 +34,15 @@ const {
 }>();
 
 const attrs = useAttrs();
+const id = toRef(() => attrs.id as string | undefined);
 const slots = useSlots();
 const generatedId = useId();
-const selectId = computed(() => id || `ouds-select-${generatedId}`);
-const labelId = computed(() => `${selectId.value}-label`);
-const helperId = computed(() => `${selectId.value}-helper`);
-const errorId = computed(() => `${selectId.value}-error`);
-const helperLinkId = computed(() => `${selectId.value}-helper-link`);
-const loadingId = computed(() => `${selectId.value}-loading`);
+const selectId = toRef(() => id.value || `ouds-select-${generatedId}`);
+const labelId = toRef(() => `${selectId.value}-label`);
+const helperId = toRef(() => `${selectId.value}-helper`);
+const errorId = toRef(() => `${selectId.value}-error`);
+const helperLinkId = toRef(() => `${selectId.value}-helper-link`);
+const loadingId = toRef(() => `${selectId.value}-loading`);
 
 // Read attributes and slot presence on each render, including parent updates.
 function describedBy() {

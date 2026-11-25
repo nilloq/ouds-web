@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import {
+  toRef,
   computed,
   inject,
   ref,
   useAttrs,
   useId,
-  useSlots,
   watchEffect,
   type InputHTMLAttributes,
 } from "vue";
+import { useControlItemSlots } from "../shared/control-item-slots.js";
 import { checkboxElementIdKey } from "./checkbox.context.js";
 
 defineOptions({ inheritAttrs: false });
 
 const {
-  id,
   label = "Checkbox",
   description = "",
   value = "",
@@ -28,7 +28,6 @@ const {
   reverse = false,
   maxWidth = false,
 } = defineProps<{
-  id?: string;
   label?: string;
   description?: string;
   value?: string;
@@ -43,21 +42,22 @@ const {
   maxWidth?: boolean;
 }>();
 const attrs = useAttrs();
-const slots = useSlots();
+const id = toRef(() => attrs.id as string | undefined);
 const input = ref<HTMLInputElement | HTMLSpanElement>();
 const generatedId = useId();
 const elementId = inject(checkboxElementIdKey, undefined);
-const checkboxId = computed(() => {
+const hasSlot = useControlItemSlots(elementId !== undefined);
+const checkboxId = toRef(() => {
   // Light DOM shares its ID namespace with the host and other custom-element apps.
-  if (elementId) return `${id || elementId}-input`;
-  return id || `ouds-checkbox-${generatedId}`;
+  if (elementId) return `${id.value || elementId}-input`;
+  return id.value || `ouds-checkbox-${generatedId}`;
 });
-const labelId = computed(() => `${checkboxId.value}-label`);
-const descriptionId = computed(() => `${checkboxId.value}-description`);
+const labelId = toRef(() => `${checkboxId.value}-label`);
+const descriptionId = toRef(() => `${checkboxId.value}-description`);
 // Read parent attributes and slot presence on each render.
 function describedBy() {
   const ids = [attrs["aria-describedby"] as string | undefined];
-  if (description || slots.description) ids.push(descriptionId.value);
+  if (description || hasSlot("description")) ids.push(descriptionId.value);
   return ids.filter(Boolean).join(" ") || undefined;
 }
 function labelledBy() {
@@ -119,14 +119,14 @@ watchEffect(() => {
         ><slot name="label">{{ label }}</slot></component
       >
       <p
-        v-if="description || $slots.description"
+        v-if="description || hasSlot('description')"
         :id="descriptionId"
         class="control-item-description"
       >
         <slot name="description">{{ description }}</slot>
       </p>
     </div>
-    <div v-if="$slots.asset" class="control-item-assets-container">
+    <div v-if="hasSlot('asset')" class="control-item-assets-container">
       <slot name="asset" />
     </div>
   </div>
