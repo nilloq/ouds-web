@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const components = [
   {
+    name: "Badge",
+    path: "/components/badge",
+    description: "A dot, count, or icon that draws attention to a status or notification.",
+  },
+  {
     name: "Button",
     path: "/components/button",
     description: "Actions that let people submit, navigate, or move through a flow.",

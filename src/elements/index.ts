@@ -1,3 +1,4 @@
+import { defineOudsBadge } from "./badge.js";
 import { defineOudsButton } from "./button.js";
 import { defineOudsTag } from "./tag.js";
 import { defineOudsSelect } from "./select.js";
@@ -6,6 +7,7 @@ import { defineOudsSwitch } from "./switch.js";
 import { defineOudsTextInput } from "./text-input.js";
 import { defineOudsTextArea } from "./text-area.js";
 
+export { OudsBadge, defineOudsBadge } from "./badge.js";
 export { OudsButton, defineOudsButton } from "./button.js";
 export { OudsTag, defineOudsTag } from "./tag.js";
 export { OudsSelect, defineOudsSelect } from "./select.js";
@@ -13,6 +15,7 @@ export { OudsCheckbox, defineOudsCheckbox } from "./checkbox.js";
 export { OudsSwitch, defineOudsSwitch } from "./switch.js";
 export { OudsTextInput, defineOudsTextInput } from "./text-input.js";
 export { OudsTextArea, defineOudsTextArea } from "./text-area.js";
+export type * from "../components/badge/badge.types.js";
 export type * from "../components/button/button.types.js";
 export type * from "../components/tag/tag.types.js";
 export type * from "../components/select/select.types.js";
@@ -21,6 +24,7 @@ export type * from "../components/switch/switch.types.js";
 export type * from "../components/text-input/text-input.types.js";
 export type * from "../components/text-area/text-area.types.js";
 
+defineOudsBadge();
 defineOudsButton();
 defineOudsTag();
 defineOudsSelect();
@@ -29,5 +33,6 @@ defineOudsSwitch();
 defineOudsTextInput();
 defineOudsTextArea();
 
+export * from "../components/badge/badge.options.js";
 export * from "../components/button/button.options.js";
 export * from "../components/tag/tag.options.js";

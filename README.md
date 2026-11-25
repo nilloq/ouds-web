@@ -1,6 +1,6 @@
 # @nilloq/ouds-web
 
-OUDS Web 1.6.0 components available as Vue components and framework-independent Web Components (custom elements). Both APIs provide **Button**, **Tag**, **Checkbox**, **Switch**, **Select**, **Text Input**, and **Text Area**. The playground demonstrates the components.
+OUDS Web 1.6.0 components available as Vue components and framework-independent Web Components (custom elements). Both APIs provide **Badge**, **Button**, **Tag**, **Checkbox**, **Switch**, **Select**, **Text Input**, and **Text Area**. The playground demonstrates the components.
 
 ## Vue components
 
@@ -49,7 +49,7 @@ import "@nilloq/ouds-web";
 <ouds-button>Continue</ouds-button>
 ```
 
-The same pattern applies to the other elements: `<ouds-tag>`, `<ouds-checkbox>`, `<ouds-switch>`, `<ouds-select>`, `<ouds-text-input>`, and `<ouds-text-area>`. Without a bundler, load the published ES module directly:
+The same pattern applies to the other elements: `<ouds-badge>`, `<ouds-tag>`, `<ouds-checkbox>`, `<ouds-switch>`, `<ouds-select>`, `<ouds-text-input>`, and `<ouds-text-area>`. Without a bundler, load the published ES module directly:
 
 ```html
 <script
@@ -66,7 +66,7 @@ import { defineOudsButton } from "@nilloq/ouds-web/button";
 defineOudsButton();
 ```
 
-The subpath exports the component constructor and types without registering it automatically. The same subpath pattern is available for `tag`, `checkbox`, `switch`, `select`, `text-input`, and `text-area`; the corresponding `components/…` subpaths are equivalent.
+The subpath exports the component constructor and types without registering it automatically. The same subpath pattern is available for `badge`, `tag`, `checkbox`, `switch`, `select`, `text-input`, and `text-area`; the corresponding `components/…` subpaths are equivalent.
 
 ## Development
 

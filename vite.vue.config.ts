@@ -20,6 +20,7 @@ export default defineConfig({
         vue: "src/vue/index.ts",
         "vue-button": "src/vue/button.ts",
         "vue-tag": "src/vue/tag.ts",
+        "vue-badge": "src/vue/badge.ts",
         "vue-select": "src/vue/select.ts",
         "vue-checkbox": "src/vue/checkbox.ts",
         "vue-switch": "src/vue/switch.ts",

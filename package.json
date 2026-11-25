@@ -109,7 +109,19 @@
       "types": "./dist/types/vue/text-area.d.ts",
       "import": "./dist/vue-text-area.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./badge": {
+      "types": "./dist/types/badge.d.ts",
+      "import": "./dist/badge.js"
+    },
+    "./components/badge": {
+      "types": "./dist/types/elements/badge.d.ts",
+      "import": "./dist/elements-badge.js"
+    },
+    "./vue/badge": {
+      "types": "./dist/types/vue/badge.d.ts",
+      "import": "./dist/vue-badge.js"
+    }
   },
   "publishConfig": {
     "access": "public"

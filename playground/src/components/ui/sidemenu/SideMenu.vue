@@ -8,6 +8,11 @@ import CodeDisplayMode from "./CodeDisplayMode.vue";
     <p class="mb-xsmall text-muted">Components</p>
     <ul class="list-group list-unstyled">
       <li>
+        <RouterLink to="/components/badge" class="list-group-item list-group-item-action">
+          Badge
+        </RouterLink>
+      </li>
+      <li>
         <RouterLink to="/components/button" class="list-group-item list-group-item-action">
           Button
         </RouterLink>
