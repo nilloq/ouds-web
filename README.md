@@ -1,6 +1,6 @@
 # @nilloq/ouds-web
 
-OUDS Web 1.5 components available as Vue components and framework-independent Web Components (custom elements). Both APIs provide **Button**, **Tag**, **Checkbox**, **Select**, **Text Input**, and **Text Area**. The playground demonstrates the components.
+OUDS Web 1.6.0 components available as Vue components and framework-independent Web Components (custom elements). Both APIs provide **Button**, **Tag**, **Checkbox**, **Select**, **Text Input**, and **Text Area**. The playground demonstrates the components.
 
 ## Vue components
 
@@ -32,9 +32,9 @@ Include the OUDS Web Orange stylesheet in the consuming page. The components do 
 
 ```html
 <link
-  href="https://cdn.jsdelivr.net/npm/@ouds/web-orange@1.5.0/dist/css/ouds-web.min.css"
+  href="https://cdn.jsdelivr.net/npm/@ouds/web-orange@1.6.0/dist/css/ouds-web.min.css"
   rel="stylesheet"
-  integrity="sha384-pASwsNEkGwpJibll6DpHIhi7kAiLDGTLmBJ5GVL1ZZe1iAGMLtrNQwksOznxX+gV"
+  integrity="sha384-/CYsyb9K6r8k5oSHG3szNxLYPR1OclHp84CIR093c9+junu5Wt5IWbhIweVxLGUZ"
   crossorigin="anonymous"
 />
 ```
@@ -54,7 +54,7 @@ The same pattern applies to the other elements: `<ouds-tag>`, `<ouds-checkbox>`,
 ```html
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/@nilloq/ouds-web@0.1.0/dist/index.js"
+  src="https://cdn.jsdelivr.net/npm/@nilloq/ouds-web@{{libraryVersion}}/dist/index.js"
 ></script>
 ```
 
