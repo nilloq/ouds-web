@@ -55,7 +55,7 @@ const reset = () => {
   result.value = "";
 };
 const recordClose = (value: string) => {
-  result.value = value ? `Closed with result: ${value}` : "Dialog closed.";
+  result.value = `close → ${JSON.stringify(value)}`;
 };
 const escape = (value: string) =>
   value
@@ -137,14 +137,16 @@ const generatedCode = computed(() => {
       description="Open the dialog to try its content, variants, and dismissal behavior."
       :code="generatedCode"
       :language="codeDisplayMode"
+      :output="result"
       @reset="reset"
     >
       <template #preview>
         <div :class="{ 'use-rounded-corner-modal': state.rounded }">
-          <OudsButton @click="codeDisplayMode === 'vue' ? (open = true) : element?.showModal()"
-            >Open dialog</OudsButton
-          >
-          <p v-if="result" role="status">{{ result }}</p>
+          <div class="d-flex justify-content-center">
+            <OudsButton @click="codeDisplayMode === 'vue' ? (open = true) : element?.showModal()"
+              >Open dialog</OudsButton
+            >
+          </div>
           <OudsModal
             v-if="codeDisplayMode === 'vue'"
             v-model:open="open"

@@ -19,6 +19,7 @@ import { defineOudsButton } from "@nilloq/ouds-web/components/button";
 import { useStore } from "../../utils/store";
 import SvgIcon from "../ui/SvgIcon.vue";
 import CodeBlock from "../ui/CodeBlock.vue";
+import PlaygroundOutput from "../ui/PlaygroundOutput.vue";
 
 const type = ref<ButtonType>("button");
 const variant = ref<ButtonVariant>("brand");
@@ -156,6 +157,7 @@ const navigationSelectOptions = [
 
       <div class="row">
         <div class="col-12 md:col-6">
+          <PlaygroundOutput :output="clicks ? `click → ${clicks}` : ''" />
           <div
             class="d-flex flex-column justify-content-center align-items-center p-medium gap-small h-100 preview"
             :class="onColoredBg ? 'bg-surface-brand-primary' : 'bg-secondary'"
@@ -210,7 +212,6 @@ const navigationSelectOptions = [
               />
               <template v-if="!iconOnly">{{ label }}</template>
             </ouds-button>
-            <p class="text-muted mb-none" aria-live="polite">Activated {{ clicks }} times</p>
           </div>
         </div>
         <div class="col-12 md:col-6">

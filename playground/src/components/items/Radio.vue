@@ -125,6 +125,7 @@ function updateSelected(event: Event) {
       description="Adjust the options to preview the radio and its code."
       :code="generatedCode"
       :language="codeDisplayMode"
+      :output="`value → ${JSON.stringify(state.selected)}`"
       @reset="Object.assign(state, defaults())"
     >
       <template #preview>
@@ -224,7 +225,6 @@ function updateSelected(event: Event) {
             {{ state.errorText }}
           </p>
         </fieldset>
-        <p class="mt-small mb-none">Selected value: {{ state.selected || "None" }}</p>
       </template>
       <template #controls>
         <div class="d-flex flex-column gap-small">

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { OudsButton } from "@nilloq/ouds-web/vue";
 import CodeBlock from "./CodeBlock.vue";
+import PlaygroundOutput from "./PlaygroundOutput.vue";
 
 defineProps<{
   title: string;
   description: string;
   code: string;
   language: "html" | "vue";
+  output?: string;
 }>();
 
 defineEmits<{
@@ -31,6 +33,9 @@ defineEmits<{
 
     <div class="row">
       <div class="col-12 md:col-6">
+        <PlaygroundOutput v-if="output !== undefined" :output="output">
+          <slot name="output-actions" />
+        </PlaygroundOutput>
         <div class="d-flex flex-column justify-content-center bg-secondary p-medium h-100">
           <slot name="preview" />
         </div>

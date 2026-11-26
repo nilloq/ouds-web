@@ -94,7 +94,7 @@ const generatedCode = computed(() => {
       @reset="Object.assign(state, defaults())"
     >
       <template #preview>
-        <p class="mb-none">
+        <p class="d-flex justify-content-center mb-none">
           <OudsBadge
             v-if="codeDisplayMode === 'vue'"
             :variant="state.variant"

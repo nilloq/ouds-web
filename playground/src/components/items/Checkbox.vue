@@ -106,6 +106,7 @@ function updateChecked(event: Event) {
       description="Adjust the options to preview the checkbox and its code."
       :code="generatedCode"
       :language="codeDisplayMode"
+      :output="`checked → ${state.checked}`"
       @reset="Object.assign(state, defaults())"
     >
       <template #preview>
@@ -158,7 +159,6 @@ function updateChecked(event: Event) {
             {{ state.errorText }}
           </p>
         </div>
-        <p class="mt-small mb-none">Checked value: {{ state.checked }}</p>
       </template>
       <template #controls>
         <div class="d-flex flex-column gap-small">

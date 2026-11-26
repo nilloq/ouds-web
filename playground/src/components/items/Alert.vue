@@ -118,6 +118,7 @@ const generatedCode = computed(() => {
       description="Try alert variants, content, and dismissal."
       :code="generatedCode"
       :language="codeDisplayMode"
+      :output="dismissed ? 'dismiss → true' : ''"
       @reset="reset"
     >
       <template #preview>
@@ -170,9 +171,12 @@ const generatedCode = computed(() => {
               >Learn more</a
             >
           </ouds-alert>
-          <p v-if="dismissed" role="status">Alert dismissed.</p>
-          <OudsButton v-if="dismissed" type="button" @click="restore">Show alert again</OudsButton>
         </div>
+      </template>
+      <template #output-actions>
+        <OudsButton type="button" size="small" :disabled="!dismissed" @click="restore"
+          >Show alert again</OudsButton
+        >
       </template>
       <template #controls>
         <div class="d-flex flex-column gap-small">

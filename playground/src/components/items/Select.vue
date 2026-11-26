@@ -99,6 +99,7 @@ function updateValue(event: Event) {
       description="Adjust the options to preview the select and its code."
       :code="generatedCode"
       :language="codeDisplayMode"
+      :output="`value → ${JSON.stringify(state.value)}`"
       @reset="Object.assign(state, defaults())"
     >
       <template #preview>
@@ -164,7 +165,6 @@ function updateValue(event: Event) {
             </option>
           </optgroup>
         </ouds-select>
-        <p class="mt-small mb-none">Selected value: {{ state.value || "None" }}</p>
       </template>
       <template #controls>
         <div class="d-flex flex-column gap-small">
