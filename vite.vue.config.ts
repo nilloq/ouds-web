@@ -24,6 +24,7 @@ export default defineConfig({
         "vue-alert": "src/vue/alert.ts",
         "vue-select": "src/vue/select.ts",
         "vue-checkbox": "src/vue/checkbox.ts",
+        "vue-radio": "src/vue/radio.ts",
         "vue-switch": "src/vue/switch.ts",
         "vue-text-input": "src/vue/text-input.ts",
         "vue-text-area": "src/vue/text-area.ts",

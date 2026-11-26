@@ -33,6 +33,10 @@
       "types": "./dist/types/checkbox.d.ts",
       "import": "./dist/checkbox.js"
     },
+    "./radio": {
+      "types": "./dist/types/radio.d.ts",
+      "import": "./dist/radio.js"
+    },
     "./switch": {
       "types": "./dist/types/switch.d.ts",
       "import": "./dist/switch.js"
@@ -64,6 +68,10 @@
     "./components/checkbox": {
       "types": "./dist/types/elements/checkbox.d.ts",
       "import": "./dist/elements-checkbox.js"
+    },
+    "./components/radio": {
+      "types": "./dist/types/elements/radio.d.ts",
+      "import": "./dist/elements-radio.js"
     },
     "./components/switch": {
       "types": "./dist/types/elements/switch.d.ts",
@@ -97,6 +105,10 @@
       "types": "./dist/types/vue/checkbox.d.ts",
       "import": "./dist/vue-checkbox.js"
     },
+    "./vue/radio": {
+      "types": "./dist/types/vue/radio.d.ts",
+      "import": "./dist/vue-radio.js"
+    },
     "./vue/switch": {
       "types": "./dist/types/vue/switch.d.ts",
       "import": "./dist/vue-switch.js"
@@ -121,6 +133,18 @@
     "./vue/badge": {
       "types": "./dist/types/vue/badge.d.ts",
       "import": "./dist/vue-badge.js"
+    },
+    "./alert": {
+      "types": "./dist/types/alert.d.ts",
+      "import": "./dist/alert.js"
+    },
+    "./components/alert": {
+      "types": "./dist/types/elements/alert.d.ts",
+      "import": "./dist/elements-alert.js"
+    },
+    "./vue/alert": {
+      "types": "./dist/types/vue/alert.d.ts",
+      "import": "./dist/vue-alert.js"
     }
   },
   "publishConfig": {
@@ -136,7 +160,7 @@
     "prepare": "vp config && vp run build"
   },
   "devDependencies": {
-    "@types/node": "^26.6.10",
+    "@types/node": "^26.6.11",
     "@vitejs/plugin-vue": "^6.0.11",
     "@vueuse/core": "^15.1.0",
     "bumpp": "^12.3.0",

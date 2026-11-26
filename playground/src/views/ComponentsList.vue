@@ -21,6 +21,11 @@ const components = [
     description: "A control for selecting one or more options from a set.",
   },
   {
+    name: "Radio",
+    path: "/components/radio",
+    description: "A control for selecting one option from a group.",
+  },
+  {
     name: "Switch",
     path: "/components/switch",
     description: "A control for turning a setting on or off.",
