@@ -1,6 +1,6 @@
 # @nilloq/ouds-web
 
-OUDS Web 1.6.0 components available as Vue components and framework-independent Web Components (custom elements). Both APIs provide **Alert**, **Badge**, **Button**, **Tag**, **Checkbox**, **Radio**, **Switch**, **Select**, **Text Input**, and **Text Area**. The playground demonstrates the components.
+OUDS Web 1.6.0 components available as Vue components and framework-independent Web Components (custom elements). Both APIs provide **Alert**, **Badge**, **Button**, **Modal**, **Tag**, **Checkbox**, **Radio**, **Switch**, **Select**, **Text Input**, and **Text Area**. The playground demonstrates the components.
 
 ## Vue components
 
@@ -49,7 +49,7 @@ import "@nilloq/ouds-web";
 <ouds-button>Continue</ouds-button>
 ```
 
-The same pattern applies to the other elements: `<ouds-alert>`, `<ouds-badge>`, `<ouds-tag>`, `<ouds-checkbox>`, `<ouds-radio>`, `<ouds-switch>`, `<ouds-select>`, `<ouds-text-input>`, and `<ouds-text-area>`. Without a bundler, load the published ES module directly:
+The same pattern applies to the other elements: `<ouds-modal>`, `<ouds-alert>`, `<ouds-badge>`, `<ouds-tag>`, `<ouds-checkbox>`, `<ouds-radio>`, `<ouds-switch>`, `<ouds-select>`, `<ouds-text-input>`, and `<ouds-text-area>`. Without a bundler, load the published ES module directly:
 
 ```html
 <script
@@ -66,7 +66,50 @@ import { defineOudsButton } from "@nilloq/ouds-web/button";
 defineOudsButton();
 ```
 
-The subpath exports the component constructor and types without registering it automatically. The same subpath pattern is available for `alert`, `badge`, `tag`, `checkbox`, `radio`, `switch`, `select`, `text-input`, and `text-area`; the corresponding `components/…` subpaths are equivalent.
+The subpath exports the component constructor and types without registering it automatically. The same subpath pattern is available for `modal`, `alert`, `badge`, `tag`, `checkbox`, `radio`, `switch`, `select`, `text-input`, and `text-area`; the corresponding `components/…` subpaths are equivalent.
+
+## Modal dialogs
+
+`OudsModal` uses a native `<dialog>` for focus handling and background inertness. It needs OUDS CSS and no OUDS JavaScript or invoker/closedby polyfills.
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import { OudsModal, OudsButton } from "@nilloq/ouds-web/vue";
+const open = ref(false);
+</script>
+
+<template>
+  <OudsButton @click="open = true">Edit preferences</OudsButton>
+  <OudsModal v-model:open="open" label="Preferences" description="Review your settings.">
+    <template #actions="{ close }">
+      <OudsButton variant="strong" @click="close('saved')">Save</OudsButton>
+      <OudsButton @click="close()">Cancel</OudsButton>
+    </template>
+  </OudsModal>
+</template>
+```
+
+For custom elements, register with `defineOudsModal` from `@nilloq/ouds-web/modal`. After the element mounts, call `element.showModal()` / `element.close(returnValue?)`, or set its boolean `open` property. The `open` attribute also opens it. A `form method="dialog"` inside a slot closes it with the submit button's value. Set Boolean properties to `false` to disable defaults; an attribute such as `dismissible="false"` is still present and does not disable the option.
+
+| Property                             | Default                | Purpose                                                                                                                                |
+| ------------------------------------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`, `description`, `subtitle`   | `Dialog`, empty, empty | Dialog text; the title, description, and subtitle slots override these.                                                                |
+| `headingLevel`                       | `h2`                   | Heading tag, `h1` through `h6`.                                                                                                        |
+| `type`                               | `dialog`               | `dialog` or `fullscreen`.                                                                                                              |
+| `size`                               | `default`              | `default` or `small`; standard dialogs only.                                                                                           |
+| `fixedHeight`, `nonBlurred`          | `false`                | Standard dialog height and backdrop variants.                                                                                          |
+| `variant`                            | `neutral`              | `neutral`, `negative`, `positive`, `info`, or `warning`.                                                                               |
+| `iconLabel`                          | Status name            | Localized accessible status label for functional icons.                                                                                |
+| `stickyActions`, `horizontalActions` | `false`                | Footer placement and mobile action layout. Sticky actions require description or body content; otherwise the footer stays in the body. |
+| `dismissible`                        | `true`                 | Show the close button.                                                                                                                 |
+| `closeLabel`                         | `Close dialog`         | Localized close button label.                                                                                                          |
+| `closeOnEscape`                      | `true`                 | Allow Escape dismissal.                                                                                                                |
+| `closeOnBackdrop`                    | `false`                | Allow clicks outside the dialog to dismiss it.                                                                                         |
+
+Slots: `title`, `subtitle`, `description`, `icon` (neutral variant), `previous`, `actions`, and the default rich body slot. Vue's `actions` slot receives `close(returnValue?)`. Supply actions in primary, secondary, tertiary order. Use `autofocus` on content that should receive initial focus. Rounded corners use the global OUDS parent class `use-rounded-corner-modal`.
+
+Events: `show` after opening; `close` with the return value; `cancel` for Escape. Vue receives the return value directly and the native cancel event. Custom elements expose the return value as `event.detail[0]` and a cancellable `cancel` event. Calling `preventDefault()` in a cancel listener keeps the dialog open. Vue also emits `update:open` for model synchronization. Use the component methods for opening so state stays synchronized. Separate Vue applications sharing a document should configure unique `app.config.idPrefix` values for generated IDs.
 
 ## Development
 

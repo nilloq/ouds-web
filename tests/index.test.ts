@@ -1,5 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import {
+  defineOudsModal,
+  OudsModal,
   defineOudsButton,
   defineOudsTag,
   OudsButton,
@@ -9,6 +11,9 @@ import {
 } from "../src/index.ts";
 
 test("exports the Vue-authored custom elements and registration helpers", () => {
+  expect(typeof OudsModal).toBe("function");
+  expect(defineOudsModal).toBeTypeOf("function");
+  expect(() => defineOudsModal()).not.toThrow();
   expect(typeof OudsRadio).toBe("function");
   expect(defineOudsRadio).toBeTypeOf("function");
   expect(() => defineOudsRadio()).not.toThrow();

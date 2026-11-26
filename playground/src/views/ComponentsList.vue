@@ -21,6 +21,11 @@ const components = [
     description: "A control for selecting one or more options from a set.",
   },
   {
+    name: "Modal",
+    path: "/components/modal",
+    description: "Modal and fullscreen dialogs with native focus and dismissal behavior.",
+  },
+  {
     name: "Radio",
     path: "/components/radio",
     description: "A control for selecting one option from a group.",

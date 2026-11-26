@@ -22,6 +22,7 @@ export default defineConfig({
         "vue-tag": "src/vue/tag.ts",
         "vue-badge": "src/vue/badge.ts",
         "vue-alert": "src/vue/alert.ts",
+        "vue-modal": "src/vue/modal.ts",
         "vue-select": "src/vue/select.ts",
         "vue-checkbox": "src/vue/checkbox.ts",
         "vue-radio": "src/vue/radio.ts",

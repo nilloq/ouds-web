@@ -28,6 +28,11 @@ import CodeDisplayMode from "./CodeDisplayMode.vue";
         </RouterLink>
       </li>
       <li>
+        <RouterLink to="/components/modal" class="list-group-item list-group-item-action"
+          >Modal</RouterLink
+        >
+      </li>
+      <li>
         <RouterLink to="/components/radio" class="list-group-item list-group-item-action">
           Radio
         </RouterLink>

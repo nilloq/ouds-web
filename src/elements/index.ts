@@ -45,3 +45,7 @@ defineOudsTextArea();
 export * from "../components/badge/badge.options.js";
 export * from "../components/button/button.options.js";
 export * from "../components/tag/tag.options.js";
+
+import { defineOudsModal } from "./modal.js";
+export * from "./modal.js";
+defineOudsModal();

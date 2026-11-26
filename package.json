@@ -145,6 +145,18 @@
     "./vue/alert": {
       "types": "./dist/types/vue/alert.d.ts",
       "import": "./dist/vue-alert.js"
+    },
+    "./modal": {
+      "types": "./dist/types/modal.d.ts",
+      "import": "./dist/modal.js"
+    },
+    "./components/modal": {
+      "types": "./dist/types/elements/modal.d.ts",
+      "import": "./dist/elements-modal.js"
+    },
+    "./vue/modal": {
+      "types": "./dist/types/vue/modal.d.ts",
+      "import": "./dist/vue-modal.js"
     }
   },
   "publishConfig": {

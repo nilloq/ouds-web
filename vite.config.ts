@@ -19,6 +19,8 @@ export default defineConfig({
         tag: "src/tag.ts",
         badge: "src/badge.ts",
         alert: "src/alert.ts",
+        modal: "src/modal.ts",
+        "elements-modal": "src/elements/modal.ts",
         "elements-alert": "src/elements/alert.ts",
         select: "src/select.ts",
         checkbox: "src/checkbox.ts",

@@ -21,3 +21,5 @@ export type { TextAreaElement } from "../components/text-area/text-area.types.js
 export * from "../components/badge/badge.options.js";
 export * from "../components/button/button.options.js";
 export * from "../components/tag/tag.options.js";
+
+export * from "./modal.js";

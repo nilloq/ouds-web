@@ -28,6 +28,7 @@ export default defineConfig({
       "@nilloq/ouds-web/components/select": resolve(projectRoot, "src/elements/select.ts"),
       "@nilloq/ouds-web/components/tag": resolve(projectRoot, "src/elements/tag.ts"),
       "@nilloq/ouds-web/components/alert": resolve(projectRoot, "src/elements/alert.ts"),
+      "@nilloq/ouds-web/components/modal": resolve(projectRoot, "src/elements/modal.ts"),
       "@nilloq/ouds-web/components/badge": resolve(projectRoot, "src/elements/badge.ts"),
       "@nilloq/ouds-web/components/text-input": resolve(projectRoot, "src/elements/text-input.ts"),
       "@nilloq/ouds-web/components/text-area": resolve(projectRoot, "src/elements/text-area.ts"),
