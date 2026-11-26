@@ -18,6 +18,8 @@ export default defineConfig({
         button: "src/button.ts",
         tag: "src/tag.ts",
         badge: "src/badge.ts",
+        alert: "src/alert.ts",
+        "elements-alert": "src/elements/alert.ts",
         select: "src/select.ts",
         checkbox: "src/checkbox.ts",
         switch: "src/switch.ts",

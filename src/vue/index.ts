@@ -1,3 +1,4 @@
+export * from "./alert.js";
 export { OudsBadge } from "./badge.js";
 export { OudsButton } from "./button.js";
 export { OudsTag } from "./tag.js";

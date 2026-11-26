@@ -1,3 +1,8 @@
+import { defineOudsAlert } from "./alert.js";
+export { OudsAlert, defineOudsAlert } from "./alert.js";
+export type * from "../components/alert/alert.types.js";
+export * from "../components/alert/alert.options.js";
+defineOudsAlert();
 import { defineOudsBadge } from "./badge.js";
 import { defineOudsButton } from "./button.js";
 import { defineOudsTag } from "./tag.js";

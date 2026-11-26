@@ -7,7 +7,15 @@ export function captureControlItemSlots(host: HTMLElement): void {
   if (lightDomSlots.has(host)) return;
   lightDomSlots.set(
     host,
-    new Set(Array.from(host.children, (child) => child.getAttribute("slot") || "default")),
+    new Set(
+      Array.from(host.childNodes).flatMap((child) => {
+        if (child.nodeType === 1) {
+          return [(child as Element).getAttribute("slot") || "default"];
+        }
+        // Whitespace and Vue's conditional-slot comments do not override fallback labels.
+        return child.nodeType === 3 && child.textContent?.trim() ? ["default"] : [];
+      }),
+    ),
   );
 }
 

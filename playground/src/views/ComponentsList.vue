@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const components = [
   {
+    name: "Alert",
+    path: "/components/alert",
+    description: "Messages and inline feedback with optional actions and dismissal.",
+  },
+  {
     name: "Badge",
     path: "/components/badge",
     description: "A dot, count, or icon that draws attention to a status or notification.",
